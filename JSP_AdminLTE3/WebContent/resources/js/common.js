@@ -31,3 +31,19 @@ function SubmitMemberRegist(formRole){
 }
 
 
+function Cancel(){
+	history.go(-1);
+}
+
+function SubmitMember(form){
+	var uploadCheck = $('input[name="checkUpload"]').val();
+	if(!(uploadCheck>0)){
+		alert("사진 업로드는 필수입니다.");
+		//$('input[name="pictureFile"]').click();
+		return;
+	}
+	var form = $('form[role="'+form+'"]');
+	form.submit();
+}
+
+

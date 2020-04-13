@@ -27,4 +27,10 @@ public interface MemberService {
 	//회원삭제
 	void remove(String id)throws SQLException;
 	
+	//회원 비활성화
+	void disabled(String id)throws SQLException;
+	
+	//회원 활성화
+	void abled(String id)throws SQLException;
+	
 }

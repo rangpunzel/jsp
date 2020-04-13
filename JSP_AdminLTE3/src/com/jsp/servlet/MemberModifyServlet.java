@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.jsp.dto.MemberVO;
 import com.jsp.request.MemberModifyRequest;
@@ -55,9 +56,14 @@ public class MemberModifyServlet extends HttpServlet {
 
 		try {
 			MemberServiceImpl.getInstance().modify(member);
+			HttpSession session = request.getSession();
+			MemberVO loginUser=(MemberVO)session.getAttribute("loginUser");
+			if(member.getId().equals(loginUser.getId())) {
+				session.setAttribute("loginUser", member);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			url="member/regist_fail";
+			url="member/modify_fail";
 		}
 		
 		request.setAttribute("member", member);

@@ -3,7 +3,7 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 
 <script>
-	alert("${member.id}님 수정이 정상적으로 완료되었습니다.");
+	alert("${param.id} 님을 삭제합니다.");
+	window.close();
 	window.opener.location.reload(true);
-	location.href="detail?id=${member.id}";
 </script>
