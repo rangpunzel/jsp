@@ -148,9 +148,11 @@
 	<input id="oldFile" type="hidden" name="oldPicture" value="" />
 	<input type="hidden" name="checkUpload" value="0" />	
 </form>
+	<input type="hidden" name="checkid" value="0" />	
 
 
 <%-- <%@ include file="/WEB-INF/views/include/open_footer.jsp" %> --%>
 
 <%@ include file="picture_js.jsp" %>
+<%@ include file="checkid_js.jsp" %>
 </body>

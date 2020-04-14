@@ -14,8 +14,6 @@
     <filter-name>setCharacterEncodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-  
-  
   <filter>
     <filter-name>loginCheckFilter</filter-name>
     <filter-class>com.jsp.filter.LoginCheckFilter</filter-class>
@@ -28,8 +26,6 @@
     <filter-name>loginCheckFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-  
-  
   <filter>
     <filter-name>memberDisabledFilter</filter-name>
     <filter-class>com.jsp.filter.MemberDisabledFilter</filter-class>
@@ -42,9 +38,6 @@
     <filter-name>memberDisabledFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-  
-  
-  
   <filter>
     <filter-name>sitemesh</filter-name>
     <filter-class>
@@ -55,8 +48,4 @@
     <filter-name>sitemesh</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-  
-  
-
-  
 </web-app>
