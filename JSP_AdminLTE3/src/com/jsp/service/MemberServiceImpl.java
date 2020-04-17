@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.jsp.dao.MemberDAO;
-import com.jsp.dao.MemberDAOImpl;
 import com.jsp.dto.MemberVO;
 import com.jsp.exception.InvalidPasswordException;
 import com.jsp.exception.NotFoundIDException;
