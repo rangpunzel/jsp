@@ -35,7 +35,6 @@ public class MemberDisabledFilter implements Filter {
 			
 		MemberVO loginUser = (MemberVO)httpReq.getSession().getAttribute("loginUser");
 		
-		
 		if(loginUser!=null && loginUser.getEnabled()!=1) {
 			for(String url : checkURLs) {
 				if(uri.contains(url)) {
@@ -44,10 +43,8 @@ public class MemberDisabledFilter implements Filter {
 					return;
 				}
 			}
-			chain.doFilter(request, response);			
-		}else {
-			chain.doFilter(request, response);			
 		}
+		chain.doFilter(request, response);			
 		
 	}
 

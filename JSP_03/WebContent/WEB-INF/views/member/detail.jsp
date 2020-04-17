@@ -62,6 +62,22 @@
 	                    <input name="name" type="text" class="form-control" id="name" value="${member.name }">
 	                  </div>
 	               </div>
+	               		<div class="form-group row">
+							<label for="authority" class="col-sm-3 control-label text-right">권 한</label>
+							<div class="col-sm-9">
+								<select name="authority" class="form-control">
+								<c:if test="${member.authority eq 'ROLE_USER'}">
+									<option value="ROLE_USER">사용자</option>
+								</c:if>
+								<c:if test="${member.authority eq 'ROLE_MANAGER'}">
+									<option value="ROLE_MANAGER">운영자</option>
+								</c:if>
+								<c:if test="${member.authority eq 'ROLE_ADMIN'}">
+									<option value="ROLE_ADMIN">관리자</option>
+								</c:if>
+								</select>
+							</div>
+						</div>	
 	                <div class="form-group row">
 	                  <label for="inputPassword3" class="col-sm-3 control-label text-right">이메일</label>
 	                  <div class="col-sm-9">

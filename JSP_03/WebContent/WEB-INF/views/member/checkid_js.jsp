@@ -10,7 +10,10 @@ $('input#id').on('change',function(event){
 
 function idCheck_go(){
 	var id= $('input#id').val();
-	
+	if(!id){
+		alert("아이디를 입력하세요.");
+		return;
+	}
 	$.ajax({
 		url:"<%=request.getContextPath()%>/member/checkid",
 		data:{"id":id},
@@ -20,12 +23,13 @@ function idCheck_go(){
 			if(data==id){
 				$('input[name="checkid"]').val(1);
 				alert("사용 가능한 아이디입니다.");
-			}else{
+ㄴ			}else{
 				alert("이미 사용중인 아이디 입니다.");	
+				$('input#id').focus();
 			}
 		},
 		error:function(xhr,exception){
-			alert("파일 업로드를 실패했습니다.");
+			alert("중복체크를 실패했습니다.");
 		}
 	});
 }

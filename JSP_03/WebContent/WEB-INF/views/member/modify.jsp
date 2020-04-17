@@ -69,6 +69,16 @@
 	                    <input name="name" type="text" class="form-control" id="name" value="${member.name }">
 	                  </div>
 	               </div>
+	               	     <div class="form-group row">
+							<label for="authority" class="col-sm-3 control-label text-right">권 한</label>
+							<div class="col-sm-9">
+								<select name="authority" class="form-control">
+									<option value="ROLE_USER" ${member.authority eq "ROLE_USER" ? "selected" : ""}>사용자</option>
+									<option value="ROLE_MANAGER" ${member.authority eq "ROLE_MANAGER" ? "selected" : ""}>운영자</option>
+									<option value="ROLE_ADMIN" ${member.authority eq "ROLE_ADMIN" ? "selected" : ""}>관리자</option>
+								</select>
+							</div>
+						</div>
 	                <div class="form-group row">
 	                  <label for="email" class="col-sm-3 control-label text-right">이메일</label>
 	                  <div class="col-sm-9">

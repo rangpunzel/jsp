@@ -118,6 +118,7 @@
            	</div>            
        	  </div>   
 		  <div class="card-footer">
+		  	<%@ include file="/WEB-INF/views/pagination/pagination.jsp" %>
 		  </div> <!-- card-footer -->
         </div> <!-- card  -->
       </section>	

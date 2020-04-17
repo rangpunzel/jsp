@@ -39,15 +39,13 @@ public class MemberDisabledFilter implements Filter {
 		if(loginUser!=null && loginUser.getEnabled()!=1) {
 			for(String url : checkURLs) {
 				if(uri.contains(url)) {
-					url="commons/enabledCheck";
+					url="commons/checkDisabled";
 					ViewResolver.view(httpReq, httpResp, url);
 					return;
 				}
 			}
-			chain.doFilter(request, response);			
-		}else {
-			chain.doFilter(request, response);			
 		}
+		chain.doFilter(request, response);			
 		
 	}
 

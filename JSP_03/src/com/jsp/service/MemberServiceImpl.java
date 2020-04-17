@@ -16,7 +16,7 @@ public class MemberServiceImpl implements MemberService {
 	public static MemberServiceImpl getInstance() {
 		return instance;
 	}
-	private MemberDAO memberDAO = MemberDAOImpl.getInstance();
+	private MemberDAO memberDAO; //= MemberDAOImpl.getInstance();
 	public void setMemberDAO(MemberDAO memberDAO) {
 		this.memberDAO=memberDAO;
 	}

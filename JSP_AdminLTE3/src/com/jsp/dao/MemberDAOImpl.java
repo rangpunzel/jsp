@@ -3,22 +3,26 @@ package com.jsp.dao;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 import com.jsp.dto.MemberVO;
-import com.jsp.mybatis.OracleMyBatisSqlSessionFactoryBuilder;
+import com.jsp.request.SearchCriteria;
 
 public class MemberDAOImpl implements MemberDAO {
 	
-	private static MemberDAOImpl instance=new MemberDAOImpl();
+/*	private static MemberDAOImpl instance=new MemberDAOImpl();
 	private MemberDAOImpl() {}
 	public static MemberDAOImpl getInstance() {
 		return instance;
-	}
+	}*/
 	
-	private SqlSessionFactory sessionFactory = OracleMyBatisSqlSessionFactoryBuilder.getSqlSessionFactory();
-
+	private SqlSessionFactory sessionFactory; //= OracleMyBatisSqlSessionFactoryBuilder.getSqlSessionFactory();
+	
+	public void setSessionFactory(SqlSessionFactory sessionFactory) {
+		this.sessionFactory=sessionFactory;
+	}
 	
 	@Override
 	public List<MemberVO> selectMemberList() throws SQLException {
@@ -78,6 +82,30 @@ public class MemberDAOImpl implements MemberDAO {
 		SqlSession session=sessionFactory.openSession(true);
 		session.update("Member-Mapper.abledMember",id);
 		session.close();
+	}
+
+	@Override
+	public List<MemberVO> selectMemberList(SearchCriteria cri) throws SQLException {
+		SqlSession session=sessionFactory.openSession(true);
+		
+		int offset = cri.getPageStartRowNum();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		List<MemberVO> memberList = null;
+		
+		memberList = session.selectList("Member-Mapper.selectSearchMemberList",cri,rowBounds);
+		session.close();
+		return memberList;
+	}
+
+	@Override
+	public int selectMemberListCount(SearchCriteria cri) throws SQLException {
+		int count=0;
+		SqlSession session=sessionFactory.openSession(true);
+		count=session.selectOne("Member-Mapper.selectSearchMemberListCount",cri);
+		session.close();
+		return count;
 	}
 
 }

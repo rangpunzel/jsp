@@ -3,6 +3,6 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 
 <script>
-alert("권한이 없습니다.");
+alert("정지된 계정입니다. \n사용제한으로 불가합니다.");
 history.go(-1);
 </script>
