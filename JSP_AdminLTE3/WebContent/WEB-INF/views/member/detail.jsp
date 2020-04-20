@@ -113,7 +113,7 @@
 </form>
 
 <script>
-	var imageURL="picture/get?picture=${member.picture}";
+	var imageURL="picture/get.do?picture=${member.picture}";
 	$('div#pictureView').css({'background-image':'url('+imageURL+')',
 			'background-position':'center',
 			'background-size':'cover',
@@ -121,18 +121,18 @@
 	});
 	
 	$('#modifyBtn').on('click',function(){
-		location.href="modify?id=${member.id}";
+		location.href="modifyForm.do?id=${member.id}";
 	});
 	
 	$('#deleteBtn').on('click',function(){
 		var pwd = prompt("암호를 입력하세요.");
 		
 		$.ajax({
-			url:"checkPassword?pwd="+pwd,
+			url:"checkPassword.do?pwd="+pwd,
 			type:"get",
 			success:function(data){
 				if(data=="SUCCESS"){
-					location.href="remove?id=${member.id}";
+					location.href="remove.do?id=${member.id}";
 				}else{
 					alert("패스워드가 일치하지 않습니다.");
 				}
@@ -155,10 +155,10 @@
 	});
 	
 	$('#disabledBtn').on('click',function(){
-		location.href="disabled?id=${member.id}";
+		location.href="disabled.do?id=${member.id}";
 	});
 	$('#enabledBtn').on('click',function(){
-		location.href="enabled?id=${member.id}";
+		location.href="enabled.do?id=${member.id}";
 	});
 
 </script>

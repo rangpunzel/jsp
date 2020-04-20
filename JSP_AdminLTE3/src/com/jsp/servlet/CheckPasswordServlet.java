@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import com.jsp.dto.MemberVO;
 
-@WebServlet("/member/checkPassword")
+//@WebServlet("/member/checkPassword")
 public class CheckPasswordServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

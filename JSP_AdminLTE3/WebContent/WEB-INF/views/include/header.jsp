@@ -40,10 +40,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="<%=request.getContextPath() %>/member/list" class="nav-link">회원관리</a>
+        <a href="<%=request.getContextPath() %>/member/list.do" class="nav-link">회원관리</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="<%=request.getContextPath() %>/board/list" class="nav-link">자유게시판</a>
+        <a href="<%=request.getContextPath() %>/board/list.do" class="nav-link">자유게시판</a>
       </li>
        <li class="nav-item d-none d-sm-inline-block">
         <a href="<%=request.getContextPath() %>/pds/list" class="nav-link">자료실</a>
@@ -171,7 +171,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="<%=request.getContextPath()%>/member/picture/get?picture=${loginUser.picture}" 
+          <img src="<%=request.getContextPath()%>/member/picture/get.do?picture=${loginUser.picture}" 
           onerror="this.src='<%=request.getContextPath() %>/resources/bootstrap/dist/img/avatar2.png'"
           class="img-circle elevation-2" alt="User Image">
         </div>
@@ -179,7 +179,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <div class="row">
           	<a class="col-md-8" href="">${loginUser.id }</a>
           	<button class="btn btn-xs btn-primary col-xs-3 " type="button" 
-          		onclick="location.href='<%=request.getContextPath() %>/commons/logout';" >Logout</button>
+          		onclick="location.href='<%=request.getContextPath() %>/commons/logout.do';" >Logout</button>
           </div>
           <a href="tel:${loginUser.phone }">tel : ${loginUser.phone }</a><br/>
           <a href="mailto:${loginUser.email }">email : ${loginUser.email }</a>			          

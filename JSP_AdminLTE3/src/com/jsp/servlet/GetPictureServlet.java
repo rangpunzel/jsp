@@ -16,7 +16,7 @@ import org.omg.CORBA.portable.OutputStream;
 
 import com.jsp.utils.GetUploadPath;
 
-@WebServlet("/member/picture/get")
+//@WebServlet("/member/picture/get")
 public class GetPictureServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String fileName = request.getParameter("picture");

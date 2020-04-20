@@ -4,5 +4,5 @@
 
 <script>
  alert("${param.id}님을 비활성화 하였습니다.");
- location.href="detail?id=${param.id}";
+ location.href="detail.do?id=${param.id}";
 </script>

@@ -20,7 +20,7 @@ import com.jsp.utils.GetUploadPath;
 import com.jsp.utils.MakeFileName;
 import com.jsp.utils.MakeLogForException;
 
-@WebServlet("/member/picture")
+//@WebServlet("/member/picture")
 public class UploadPictureServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
