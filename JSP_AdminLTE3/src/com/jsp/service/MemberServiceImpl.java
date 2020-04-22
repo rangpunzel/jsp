@@ -14,11 +14,11 @@ import com.jsp.request.SearchCriteria;
 
 public class MemberServiceImpl implements MemberService {
 	
-	private static MemberServiceImpl instance = new MemberServiceImpl();
+/*	private static MemberServiceImpl instance = new MemberServiceImpl();
 	private MemberServiceImpl() {}
 	public static MemberServiceImpl getInstance() {
 		return instance;
-	}
+	}*/
 	private MemberDAO memberDAO;// = MemberDAOImpl.getInstance();
 	public void setMemberDAO(MemberDAO memberDAO) {
 		this.memberDAO=memberDAO;

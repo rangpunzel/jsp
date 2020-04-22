@@ -13,7 +13,7 @@ import com.jsp.service.MemberService;
 import com.jsp.service.MemberServiceImpl;
 
 public class MemberModifyFormAction implements Action {
-	private MemberService memberService = MemberServiceImpl.getInstance();
+	private MemberService memberService;// = MemberServiceImpl.getInstance();
 	public void setMemberService(MemberService memberService) {
 		this.memberService = memberService;
 	}

@@ -25,8 +25,6 @@ public class BoardVO {
 		this.updatedate = updatedate;
 	}
 	
-	
-	
 	public int getReplycnt() {
 		return replycnt;
 	}

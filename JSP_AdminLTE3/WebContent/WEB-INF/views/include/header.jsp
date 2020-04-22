@@ -46,7 +46,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <a href="<%=request.getContextPath() %>/board/list.do" class="nav-link">자유게시판</a>
       </li>
        <li class="nav-item d-none d-sm-inline-block">
-        <a href="<%=request.getContextPath() %>/pds/list" class="nav-link">자료실</a>
+        <a href="<%=request.getContextPath() %>/pds/list.do" class="nav-link">자료실</a>
       </li>
     </ul>
 
@@ -191,19 +191,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview"
         	data-accordion="false">
         	<li class="nav-item" >
-                <a href="#" class="nav-link">
+                <a href="<%=request.getContextPath() %>/member/list.do" class="nav-link">
                   <i class="fas fa-user-friends nav-icon"></i>
                   <p>회원관리</p>
                 </a>
 	        </li>
 	        <li class="nav-item" >
-                <a href="#" class="nav-link">
+                <a href="<%=request.getContextPath() %>/board/list.do" class="nav-link">
                   <i class="fas fa-comments nav-icon"></i>
                   <p>자유게시판</p>
                 </a>
 	        </li>
 	        <li class="nav-item" >
-                <a href="#" class="nav-link">
+                <a href="<%=request.getContextPath() %>/pds/list.do" class="nav-link">
                   <i class="fas fa-archive nav-icon"></i>
                   <p>자료실</p>
                 </a>
