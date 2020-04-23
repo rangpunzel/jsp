@@ -26,6 +26,13 @@ function SubmitMemberRegist(formRole){
 		//$('input[name="pictureFile"]').click();
 		return;
 	}
+	
+	var checkId = $('input[name="checkid"]').val();
+	if(!(checkId>0)){
+		alert("중복체크를 해주세요.");
+		return;
+	}
+	
 	var form = $('form[role="'+formRole+'"]');
 	form.submit();
 }

@@ -68,16 +68,8 @@
   <!-- /.content-wrapper -->
 	
 <!-- Summernote -->
-<script src="<%=request.getContextPath() %>/resources/bootstrap/plugins/summernote/summernote-bs4.min.js"></script>
+ <%@ include file="/WEB-INF/views/commons/summernote.jsp" %>
 <script>
-	$(function(){
-		$('#content').summernote({
-	
-			placeholder:'여기에 내용을 적으세요.',
-			height:250,		
-		});
-	});
-	
 	$('#modifyBtn').on('click',function(e){				
 		var title=$('input[name="title"]');
 		if(title.val()==""){

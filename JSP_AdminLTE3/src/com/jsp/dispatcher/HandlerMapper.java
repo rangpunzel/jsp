@@ -33,7 +33,7 @@ public class HandlerMapper {
 			System.out.println(actionClassName);
 			
 			try {
-				Class<?> actionClass = Class.forName(actionClassName);
+				Class<?> actionClass = Class.forName(actionClassName); //클래스 로딩을 해야 요청한 이름을 알수있다.
 				Action commandAction = (Action)actionClass.newInstance();
 				
 				//의존성 확인 및 조립
