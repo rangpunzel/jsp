@@ -8,21 +8,20 @@
 	var formObj = $("form[role='form']");
 
 	$('button#modifyBtn').on('click',function(evnet){
-		alert('modify btn click');
-/* 		formObj.attr({
+		formObj.attr({
 			'action':'modifyForm.do',
 			'method':'post'
 		});
-		formObj.submit(); */
+		formObj.submit();
 	});
 	
 	$("#removeBtn").on("click", function(){
-/* 		var answer = confirm("정말 삭제하시겠습니까?");
+ 		var answer = confirm("정말 삭제하시겠습니까?");
 		if(answer){		
 			formObj.attr("action", "remove.do");
 			formObj.attr("method", "post");
 			formObj.submit();
-		} */
+		}
 	});
 	
 	$("#listBtn").on("click", function(){

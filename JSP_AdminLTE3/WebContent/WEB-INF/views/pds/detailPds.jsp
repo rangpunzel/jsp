@@ -71,7 +71,9 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  
+    <form role="form">
+  	<input type='hidden' name='pno' value ="${pds.pno}">
+  </form>
 
 <!-- Modal -->
 <div id="modifyModal" class="modal modal-default fade" role="dialog">

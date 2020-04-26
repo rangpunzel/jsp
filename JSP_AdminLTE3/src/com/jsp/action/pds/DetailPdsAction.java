@@ -29,12 +29,13 @@ public class DetailPdsAction implements Action {
 		
 		try {
 			pds=pdsService.getPds(pno);
-			
-			request.setAttribute("pds", pds);
 		}catch(SQLException e) {
 			e.printStackTrace();
 			url="error/500_error";
 		}
+		
+		request.setAttribute("pds", pds);
+		System.out.println(pds.getPno());
 		return url;
 	}
 
