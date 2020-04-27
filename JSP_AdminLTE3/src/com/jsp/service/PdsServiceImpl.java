@@ -51,26 +51,22 @@ public class PdsServiceImpl implements PdsService {
 	public void regist(PdsVO pds) throws SQLException {
 		int pno = pdsDAO.getSeqNextValue();
 		pds.setPno(pno);
-		System.out.println("내용~~"+pds.getContent());
-		System.out.println(pds.getTitle());
-		System.out.println(pds.getWriter());
 		pdsDAO.insertPds(pds);
-		
-/*		for(AttachVO attach:pds.getAttachList()) {
+		for(AttachVO attach:pds.getAttachList()) {
 			attach.setPno(pno);
 			attach.setAttacher(pds.getWriter());
 			attachDAO.insertAttach(attach);
-		}*/
+		}
 	}
 	@Override
 	public void modify(PdsVO pds) throws SQLException {
 		pdsDAO.updatePds(pds);		
-		//attachDAO.deleteAllAttach(pds.getPno());
-/*		for(AttachVO attach:pds.getAttachList()) {
+		attachDAO.deleteAllAttach(pds.getPno());
+		for(AttachVO attach:pds.getAttachList()) {
 			attach.setPno(pds.getPno());
 			attach.setAttacher(pds.getWriter());
 			attachDAO.insertAttach(attach);
-		}*/
+		}
 	}
 	@Override
 	public void remove(int pno) throws SQLException {
@@ -79,9 +75,9 @@ public class PdsServiceImpl implements PdsService {
 	@Override
 	public PdsVO read(int pno) throws SQLException {
 		PdsVO pds = pdsDAO.selectPdsByPno(pno);
-/*		List<AttachVO> attachList=attachDAO.selectAttachesByPno(pno);
+		List<AttachVO> attachList=attachDAO.selectAttachesByPno(pno);
 		pds.setAttachList(attachList);
-		pdsDAO.increaseViewCnt(pno);*/
+		pdsDAO.increaseViewCnt(pno);
 		
 		
 		return pds;

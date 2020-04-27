@@ -3,7 +3,7 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 
 <script>
-	alert("글등록이 정상적으로 완료되었습니다.");
+	alert("자료 등록이 정상적으로 완료되었습니다.");
 	window.close();
-	window.opener.location.reload(true);
+	window.opener.location.href="list.do?page=1&perPageNum=10";
 </script>

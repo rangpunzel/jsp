@@ -20,7 +20,8 @@
 						<h4>글등록</h4>
 					</div><!--end card-header  -->
 					<div class="card-body">
-						<form role="form" method="post" action="regist.do" name="registForm"><!-- enctype="multipart/form-data"  -->
+						<!-- enctype="multipart/form-data" : request.getParameter()를 쓸수 없음  -->
+						<form enctype="multipart/form-data" role="form" method="post" action="regist.do" name="registForm">
 							<div class="form-group">
 								<label for="writer">작성자</label> 
 								<input type="text" id="writer" readonly

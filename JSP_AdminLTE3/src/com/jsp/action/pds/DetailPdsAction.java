@@ -2,41 +2,51 @@ package com.jsp.action.pds;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.jsp.action.Action;
+import com.jsp.dto.AttachVO;
 import com.jsp.dto.PdsVO;
 import com.jsp.service.PdsService;
+import com.jsp.utils.MakeFileName;
 
 public class DetailPdsAction implements Action {
+	
 	private PdsService pdsService;
 	public void setPdsService(PdsService pdsService) {
-		this.pdsService=pdsService;
+		this.pdsService = pdsService;
 	}
 	
-
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String url="pds/detailPds";
 		
-		int pno=Integer.parseInt(request.getParameter("pno"));
+		String url="pds/detail";
 		
-		PdsVO pds=null;
-		
+		int pno = Integer.parseInt(request.getParameter("pno"));
 		try {
-			pds=pdsService.getPds(pno);
-		}catch(SQLException e) {
+			PdsVO pds = pdsService.read(pno);
+			List<AttachVO> renamedAttachList=MakeFileName.parseFileNameFromAttaches(pds.getAttachList(), "\\$\\$");
+			pds.setAttachList(renamedAttachList);
+			
+			request.setAttribute("pds", pds);
+		} catch (SQLException e) {			
 			e.printStackTrace();
 			url="error/500_error";
-		}
+		}		
 		
-		request.setAttribute("pds", pds);
-		System.out.println(pds.getPno());
 		return url;
 	}
 
 }
+
+
+
+
+
+
+

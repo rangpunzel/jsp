@@ -49,8 +49,7 @@ public class AttachDAOImpl implements AttachDAO{
 	public AttachVO selectAttachByAno(int ano) throws SQLException {
 		SqlSession session = sessionFactory.openSession();
 		
-		AttachVO attach=
-			session.selectOne("Attach-Mapper.selectAttachByAno",ano);
+		AttachVO attach=session.selectOne("Attach-Mapper.selectAttachByAno",ano);
 		
 		session.close();
 		return attach;

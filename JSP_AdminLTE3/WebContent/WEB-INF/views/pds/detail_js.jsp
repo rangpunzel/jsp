@@ -7,21 +7,15 @@
 	
 	var formObj = $("form[role='form']");
 
-	$('button#modifyBtn').on('click',function(evnet){
-		formObj.attr({
-			'action':'modifyForm.do',
-			'method':'post'
-		});
+	$('#modifyBtn').on('click',function(evnet){
+		formObj.attr("action","modifyForm.do");
 		formObj.submit();
 	});
 	
 	$("#removeBtn").on("click", function(){
- 		var answer = confirm("정말 삭제하시겠습니까?");
-		if(answer){		
-			formObj.attr("action", "remove.do");
-			formObj.attr("method", "post");
-			formObj.submit();
-		}
+		formObj.attr("action", "remove.do");
+		formObj.attr("method", "post");
+		formObj.submit();
 	});
 	
 	$("#listBtn").on("click", function(){

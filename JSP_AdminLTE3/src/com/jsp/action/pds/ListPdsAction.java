@@ -13,24 +13,26 @@ import com.jsp.request.SearchCriteria;
 import com.jsp.service.PdsService;
 
 public class ListPdsAction implements Action {
+	
 	private PdsService pdsService;
-	public void setPdsService(PdsService pdsService) {
-		this.pdsService = pdsService;
+	public void setPdsService (PdsService pdsService) {
+		this.pdsService=pdsService;
 	}
-
+	
+	
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String url="pds/list";
 		
 		String page=request.getParameter("page");
-		String perPageNum=request.getParameter("perPageNum");
+		String perPageNum=request.getParameter("perPageNum");	
 		String searchType=request.getParameter("searchType");
 		String keyword=request.getParameter("keyword");
 		
 		SearchCriteria cri = new SearchCriteria();
 		
-		try {
+		try{
 			cri.setPage(Integer.parseInt(page));
 			cri.setPerPageNum(Integer.parseInt(perPageNum));
 		}catch(NumberFormatException e) {
@@ -42,13 +44,21 @@ public class ListPdsAction implements Action {
 		}
 		
 		try {
-			Map<String,Object> dataMap=pdsService.getList(cri);
+			Map<String,Object> dataMap=pdsService.getList(cri);			
 			request.setAttribute("dataMap", dataMap);
-		}catch(SQLException e) {
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}	
+		
 		
 		return url;
 	}
 
 }
+
+
+
+
+
+

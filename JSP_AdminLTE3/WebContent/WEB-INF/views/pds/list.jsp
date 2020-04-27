@@ -45,14 +45,16 @@
 				<button type="button" class="btn btn-primary" id="registBtn" onclick="OpenWindow('registForm.do','자료등록',600,400)">자료등록</button>
 				<div id="keyword" class="card-tools" style="width:350px;">	
 					<div class="input-group row">
+					
 						<select class="form-control" name="searchType" id="searchType">
-							<option ${pageMaker.cri.searchType eq 'tcw'?'selected':'' } value="tcw">전 체</option>
-							<option ${pageMaker.cri.searchType eq 't'?'selected':'' } value="t">제 목</option>
-							<option ${pageMaker.cri.searchType eq 'w'?'selected':'' } value="w">작성자</option>
-							<option ${pageMaker.cri.searchType eq 'c'?'selected':'' } value="c">내 용</option>
-							<option ${pageMaker.cri.searchType eq 'tc'?'selected':'' } value="tc">제목+내 용</option>
-							<option ${pageMaker.cri.searchType eq 'cw'?'selected':'' } value="cw">작성자+내용</option>
-						</select>
+							<option value="tcw" ${pageMaker.cri.searchType eq 'tcw' ? 'selected':'' }>전 체</option>
+							<option value="t" ${pageMaker.cri.searchType eq 't' ? 'selected':'' }>제 목</option>
+							<option value="w" ${pageMaker.cri.searchType eq 'w' ? 'selected':'' }>작성자</option>
+							<option value="c" ${pageMaker.cri.searchType eq 'c' ? 'selected':'' }>내 용</option>
+							<option value="tc" ${pageMaker.cri.searchType eq 'tc' ? 'selected':'' }>제목+내용</option>
+							<option value="cw" ${pageMaker.cri.searchType eq 'cw' ? 'selected':'' }>작성자+내용</option>
+						</select>		
+										
 						<input  class="form-control" type="text" name="keyword" placeholder="검색어를 입력하세요." value="${pageMaker.cri.keyword }"/>
 						<span class="input-group-append">
 							<button class="btn btn-primary" type="button" id="searchBtn" data-card-widget="search">
@@ -70,20 +72,21 @@
 						<th style="width:15%;">작성자</th>
 						<th>등록일</th>
 						<th style="width:10%;">조회수</th>
-					</tr>
-					<c:if test="${empty dataMap.pdsList }">
+					</tr>	
+					<c:if test="${empty dataMap.pdsList }" >
 						<tr>
 							<td colspan="5">
 								<strong>해당 내용이 없습니다.</strong>
 							</td>
 						</tr>
-					</c:if>
+					</c:if>	
 					<c:forEach items="${dataMap.pdsList }" var="pds">
 						<tr>
 							<td>${pds.pno }</td>
-							<td id="pdsTitle" style="text-align:left;max-width:100%;overflow:hidden;white-space:nowrap; text-overflow:ellipsis;">
+							<td id="pdsTitle" style="text-align:left;max-width: 100%; 
+								overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
 								<a href="javascript:OpenWindow('detail.do?pno=${pds.pno }','상세보기',600,400);">
-									<span class="col-sm-12">${pds.title }</span>
+									<span class="col-sm-12 ">${pds.title }</span>
 								</a>
 							</td>
 							<td>${pds.writer }</td>
@@ -92,7 +95,7 @@
 							</td>
 							<td><span class="badge bg-red">${pds.viewcnt }</span></td>
 						</tr>
-					</c:forEach>
+					</c:forEach>		
 				</table>
 			</div>
 			<div class="card-footer">
@@ -116,20 +119,26 @@
 		  <input type='hidden' name="keyword" 
 		         value="${pageMaker.cri.keyword }" />
 	</form>
+
 <script>
-$('#searchBtn').on('click',function(){
+$('#searchBtn').on('click',function(e){
+	
 	var jobForm=$('#jobForm');
 	jobForm.find("[name='page']").val(1);
 	jobForm.find("[name='searchType']").val($('select[name="searchType"]').val());
 	jobForm.find("[name='keyword']").val($('input[name="keyword"]').val());
 	
-	//alert(jobForm.serialize()); //serialize() : Form태그를 parameter로 보낸다. 서버쪽에서는 getParameter로 받으면 됨.
+	/* alert(jobForm.serialize()); */
+	
 	
 	jobForm.attr("action","list.do").attr("method","get");
-	$('#jobForm').submit();
+	jobForm.submit(); 
 });
-</script> 
+
+</script>
+ 
 </body>
+
 
 
 

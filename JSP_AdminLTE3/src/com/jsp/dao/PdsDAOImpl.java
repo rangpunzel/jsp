@@ -45,7 +45,6 @@ public class PdsDAOImpl implements PdsDAO {
 	@Override
 	public PdsVO selectPdsByPno(int pno) throws SQLException {
 		SqlSession session = sessionFactory.openSession();
-		
 		PdsVO pds=session.selectOne("Pds-Mapper.selectPdsByPno",pno);
 		
 		session.close();
