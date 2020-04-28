@@ -29,7 +29,7 @@
 						</div>
 					</div><!--end card-header  -->
 					<div class="card-body pad">
-						<form role="form" method="post" action="regist.do" name="registForm">
+						<form role="form" enctype="multipart/form-data" method="post" action="regist.do" name="registForm">
 							<div class="form-group">
 								<label for="title">제 목</label> 
 								<input type="text" id="title"
@@ -44,6 +44,17 @@
 								<label for="content">내 용</label>
 								<textarea class="textarea" name="content" id="content" rows="20"
 									placeholder="1000자 내외로 작성하세요." style="display: none;"></textarea>
+							</div>
+							<div class="form-group">								
+								<div class="card card-outline card-success">
+									<div class="card-header">
+										<h5 style="display:inline;line-height:40px;">첨부파일 : </h5>
+										&nbsp;&nbsp;<button class="btn btn-xs btn-primary" 
+										type="button" id="addFileBtn">Add File</button>
+									</div>									
+									<div class="card-footer fileInput">
+									</div>
+								</div>
 							</div>
 						</form>
 					</div><!--end card-body  -->
@@ -66,6 +77,7 @@
 	history.go(-1); 
  });
  </script>
+ <jsp:include page="attach_js.jsp" />
   <%@ include file="/WEB-INF/views/commons/summernote.jsp" %>
 </body>
 <!-- Bootstrap 4 -->

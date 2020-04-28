@@ -29,7 +29,8 @@ table th,td{
 		<div class="col-12">
             <div class="card">
               <div class="card-header">
-							<button type="button" class="btn btn-default btn-flat float-left" id="registBtn">글 쓰 기</button>
+              	   <label for="pageInfo">총 ${pageMaker.totalCount } 건 | ${pageMaker.cri.page} / ${pageMaker.realEndPage}</label>
+
                 <div class="card-tools">
                   <div class="input-group input-group-sm">
                   		<select class="form-control col-md-6" name="searchType" id="searchType">
@@ -68,19 +69,19 @@ table th,td{
 						<tr style='font-size:0.85em;'>
 							<td>${board.bno }</td>
 							<td id="boardTitle" style="text-align:left;max-width: 100px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-							<a href="detail.do?bno=${board.bno }">
+							<a href="detail.do?bno=${board.bno }&page=${pageMaker.cri.page}">
 								<span class="col-sm-12 ">${board.title }
 									<c:if test="${board.replycnt ne 0 }">		
-										<span class="nav-item">															
-										&nbsp;&nbsp;<i class="fa fa-comment"></i>
-										<span class="badge badge-warning navbar-badge">${board.replycnt}</span>
-										</span>
-										
+										[${board.replycnt}]
 									</c:if>
 								</span>
 							</a>
 							</td>
-							<td>${board.isattach }</td>
+							<td>
+							<c:if test="${!empty board.attachList }">
+								<i class="fas fa-file-alt"></i>
+							</c:if>
+							</td>
 							<td>${board.writer }</td>
 							<td>
 								<fmt:formatDate value="${board.regDate }" pattern="yyyy-MM-dd"/>
@@ -94,12 +95,13 @@ table th,td{
               <!-- /.card-body -->
             </div>
 	          	<div class="card-footer">
+							<button type="button" class="btn btn-default btn-flat float-left" id="registBtn">글 쓰 기</button>
+	          	
 					<%@ include file="/WEB-INF/views/pagination/pagination.jsp" %>				
 				</div>
             <!-- /.card -->
          		 </div>
             </section>
-          
     <form id="jobForm">
 		  <input type='hidden' name="page" value="${pageMaker.cri.page}" />
 		  <input type='hidden' name="perPageNum" 

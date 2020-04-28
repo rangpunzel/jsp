@@ -32,6 +32,11 @@
   </context-param>
   
   <context-param>
+    <param-name>attachDAO</param-name>
+    <param-value>com.jsp.dao.AttachDAOImpl</param-value>
+  </context-param>
+  
+  <context-param>
     <param-name>sessionFactory</param-name>
     <param-value>com.jsp.mybatis.OracleMyBatisSqlSessionFactory</param-value>
   </context-param>

@@ -1,6 +1,7 @@
 package com.jsp.dto;
 
 import java.util.Date;
+import java.util.List;
 
 public class BoardVO {
 	private int bno;          // 게시판번호
@@ -12,7 +13,16 @@ public class BoardVO {
 	private Date updatedate;  // 수정날짜
 	
 	private int replycnt; // 댓글 개수
-	private boolean isattach; //첨부파일 여부
+	private List<AttachVO> isattach; //첨부파일 여부
+	
+	private List<AttachVO> attachList;
+	
+	public List<AttachVO> getAttachList() {
+		return attachList;
+	}
+	public void setAttachList(List<AttachVO> attachList) {
+		this.attachList = attachList;
+	}
 	
 	public BoardVO() {}
 	public BoardVO(int bno, String title, String writer, String content, int viewcnt, Date regDate, Date updatedate) {
@@ -27,10 +37,10 @@ public class BoardVO {
 	}
 	
 	
-	public boolean isIsattach() {
+	public List<AttachVO> isIsattach() {
 		return isattach;
 	}
-	public void setIsattach(boolean isattach) {
+	public void setIsattach(List<AttachVO> isattach) {
 		this.isattach = isattach;
 	}
 	public int getReplycnt() {

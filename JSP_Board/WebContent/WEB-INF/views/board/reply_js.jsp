@@ -9,8 +9,8 @@
 	<i class="fas fa-comments bg-pink"></i>
  	<div class="timeline-item" >
   		<span class="time">
-    		<i class="fa fa-clock"></i>{{prettifyDate regdate}}
-	 		<a class="btn btn-primary btn-xs" id="modifyReplyBtn"
+    		{{prettifyDate regdate}}&nbsp;
+	 		<a class="btn btn-default btn-xs" id="modifyReplyBtn"
 	    		data-replyer={{replyer}} data-toggle="modal" data-target="#modifyModal">Modify</a>
   		</span>
 	

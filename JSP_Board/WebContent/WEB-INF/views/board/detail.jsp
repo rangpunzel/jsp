@@ -68,6 +68,30 @@
 							<label for="content">내 용</label>
 							<div id="content">${board.content }</div>	
 						</div>
+						
+								<div class="card-header">
+									<label for="file">첨부파일</label>
+								</div>			
+								<div class="card-footer">
+									<div class="row">
+										<c:forEach items="${board.attachList }" var="attach">
+											<div class="col-md-4 col-sm-4 col-xs-12"  style="cursor:pointer;" onclick="location.href='<%=request.getContextPath()%>/attach/getFile.do?bno=${board.bno }&ano=${attach.ano }';">
+												<div class="info-box">	
+												 	<span class="info-box-icon bg-yellow">
+														<i class="fa fa-copy"></i>
+													</span>
+													<div class="info-box-content">
+														<span class ="info-box-text">
+															<fmt:formatDate value="${attach.regDate }" pattern="yyyy-MM-dd" />	
+														</span>
+														<span class ="info-box-number">${attach.fileName }</span>
+													</div>
+												</div>
+											 </div>											 
+										</c:forEach>
+									</div>
+								</div>				
+						
 												
 					</div>
 					<div class="card-footer">
@@ -124,6 +148,28 @@
 	<input type='hidden' name="keyword" 
 		         value="${param.keyword }" />
   </form>
+  
+  <!-- Modal -->
+<div id="modifyModal" class="modal modal-default fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" style="display:none;"></h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>        
+      </div>
+      <div class="modal-body" data-rno>
+        <p><input type="text" id="replytext" class="form-control"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" id="replyModBtn">Modify</button>
+        <button type="button" class="btn btn-danger" id="replyDelBtn">DELETE</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+  
   	<%@ include file="./reply_js.jsp" %>
     <script>
 	var formObj = $("form[role='form']");
@@ -142,7 +188,7 @@
     		}
     	});
     	$('#listgo').on('click',function(){
-    		location.href="/board/list.do"
+    		location.href="/board/list.do?page=${param.page}"
     	});
     </script>
 </body>
