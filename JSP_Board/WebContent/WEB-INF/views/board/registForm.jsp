@@ -2,10 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 
-<!DOCTYPE html>
-<html>
 <head>
-<meta charset="UTF-8">
 <title></title>
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/bootstrap/plugins/fontawesome-free/css/all.min.css">
@@ -71,4 +68,7 @@
  </script>
   <%@ include file="/WEB-INF/views/commons/summernote.jsp" %>
 </body>
-</html>
+<!-- Bootstrap 4 -->
+<script src="<%=request.getContextPath()%>/resources/bootstrap/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="<%=request.getContextPath()%>/resources/bootstrap/dist/js/adminlte.min.js"></script>
