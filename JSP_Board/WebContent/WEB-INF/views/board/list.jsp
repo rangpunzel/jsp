@@ -85,7 +85,7 @@ table th,td{
 							<td>
 								<fmt:formatDate value="${board.regDate }" pattern="yyyy-MM-dd"/>
 							</td>
-							<td><span class="badge bg-red">${board.viewcnt }</span></td>
+							<td>${board.viewcnt }</td>
 						</tr>
 					</c:forEach>
 
