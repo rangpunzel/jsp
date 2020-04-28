@@ -4,6 +4,6 @@
 
 <script>
 	alert("수정이 정상적으로 완료되었습니다.");
-	location.href="detail.do?pno=${pno}";
+	location.href="detail.do${pageMaker.makeQuery()}&pno=${pds.pno}&from=modify";
 	window.opener.location.reload(true);
 </script>

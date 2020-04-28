@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Board-Mapper">
+
+	<sql id="search">
+		<if test="searchType == 't'.toString()">
+			and title like '%'||#{keyword}||'%'			
+		</if>
+		<if test="searchType == 'w'.toString()">
+			and writer like '%'||#{keyword}||'%'			
+		</if>
+		<if test="searchType == 'tcw'.toString()">
+			and (
+			title like '%'||#{keyword}||'%'
+			or
+			writer like '%'||#{keyword}||'%'
+			or
+			content like '%'||#{keyword}||'%'						
+			)			
+		</if>
+	</sql>
+	
+	<select id="selectSearchBoardList" 
+			parameterType="com.jsp.request.SearchCriteria" 
+			resultType="board">
+		select
+		*
+		from
+		tboard
+		where bno is not null  			  	
+		<include refid="search" />
+		order by bno desc
+	</select>
+	
+		<select id="selectSearchBoardListCount" 
+			parameterType="com.jsp.request.SearchCriteria" 
+			resultType="int">
+		select
+		count(*)
+		from
+		tboard
+		where bno is not null  			  	
+		<include refid="search" />
+		order by bno desc
+	</select>
+
+	<select id="selectBoardSeqNextValue" resultType="int">
+		select tboard_seq.nextval
+		from dual
+	</select>
+
+	<select id="selectBoardList" resultType="board">
+		select
+		*
+		from tboard
+		order by bno desc
+	</select>
+	
+	<select id="selectBoardListCount" resultType="int">
+		select COUNT(*)
+		from tboard
+	</select>
+	
+	<select id="selectBoardByBno" parameterType="int" resultType="board">
+		select
+		*
+		from tboard
+		where bno=#{bno}
+	</select>
+	
+	<update id="insertBoard" parameterType="board">
+	insert into tboard (bno,title,writer,content,regdate,updatedate) 
+	values (#{bno},#{title},#{writer},#{content},sysdate,sysdate)
+	</update>
+	
+	<update id="updateBoard" parameterType="board">
+	update tboard set 
+	title=#{title},content=#{content},updatedate=sysdate
+	where bno=#{bno}
+	</update>
+
+	<update id="deleteBoard" parameterType="int">
+	delete from tboard
+	where bno=#{bno}
+	</update>
+	
+	
+	<update id="increaseViewCnt" parameterType="int">
+		update 
+		tboard 
+		set 
+		viewcnt=viewcnt+1 
+		where bno=#{bno}
+	</update>
+	
+
+</mapper>

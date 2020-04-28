@@ -5,5 +5,5 @@
 <script>
 	alert("글을 삭제합니다.");
 	window.close();
-	window.opener.location.reload(true);
+	opener.parent.searchList_go(${pageMaker.cri.page},"<%=request.getContextPath()%>/pds/list.do");
 </script>
