@@ -30,6 +30,7 @@
 		<!-- myBatis-spring -->
 		<myBatis.spring-version>1.2.2</myBatis.spring-version>
 		
+		<opensymphony.sitemesh-version>2.4.2</opensymphony.sitemesh-version>
 		
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
@@ -94,6 +95,12 @@
 		    <version>${myBatis.spring-version}</version>
 		</dependency>
 		
+		<!-- https://mvnrepository.com/artifact/opensymphony/sitemesh -->
+		<dependency>
+		    <groupId>opensymphony</groupId>
+		    <artifactId>sitemesh</artifactId>
+		    <version>${opensymphony.sitemesh-version}</version>
+		</dependency>
 		
 				
 		<!-- AspectJ -->

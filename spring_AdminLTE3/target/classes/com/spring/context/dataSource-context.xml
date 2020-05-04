@@ -12,12 +12,13 @@
 	      p:username="${user}"
 	      p:password="${password}"
 	      />
-	
+	      
+	<!-- myBatis mybatis 대소문자 유의!!!!!!!!!!! -->
 	<bean id="sqlSessionFactory"
 		class="org.mybatis.spring.SqlSessionFactoryBean"
 		p:dataSource-ref="dataSource"
-		p:configLocation="classpath:com/spring/mybatis/config/sqlConfig.xml"
-		p:mapperLocations="classpath:com/spring/mybatis/mappers/*-Mapper.xml" />
+		p:configLocation="classpath:com/spring/myBatis/config/sqlConfig.xml"
+		p:mapperLocations="classpath:com/spring/myBatis/mappers/*-Mapper.xml" />
 		
 	<bean id="sqlSession"
 		class="org.mybatis.spring.SqlSessionTemplate"
