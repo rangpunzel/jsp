@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.spring.dto.BoardVO;
 import com.spring.request.SearchCriteria;
@@ -34,12 +35,12 @@ public class BoardActionController {
 	}
 	
 	@RequestMapping("registForm.do")
-	public String registForm(Model model) throws Exception{
+	public String registForm() throws Exception{
 		String url="board/registBoard";
 		return url;
 	}
 	
-	@RequestMapping("regist.do")
+	@RequestMapping(value="regist.do",method=RequestMethod.POST)
 	public String regist(BoardVO board)throws Exception{
 		String url="board/regist_success";
 		try {
@@ -67,8 +68,8 @@ public class BoardActionController {
 		return url;
 	}
 	
-	@RequestMapping("modify.do")
-	public String modify(HttpServletRequest request,BoardVO board) {
+	@RequestMapping(value="modify.do",method=RequestMethod.POST)
+	public String modify(Model model,BoardVO board) {
 		String url="board/modify_success";
 		try {
 			boardService.modify(board);
@@ -76,7 +77,16 @@ public class BoardActionController {
 			e.printStackTrace();
 			url="board/modify_fail";
 		}
-		request.setAttribute("bno", board.getBno());
+		model.addAttribute("bno", board.getBno());
+		
+		/*String url="redirect:board/detail.do";
+		
+		url=url+PageMaker.makeQuery(cri);
+		
+		BoardVO board = modifyReq.toBoardVO();
+		
+		boardService.modify(board);*/
+		
 		return url;
 	}
 	
