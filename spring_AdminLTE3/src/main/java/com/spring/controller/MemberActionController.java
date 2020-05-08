@@ -3,13 +3,16 @@ package com.spring.controller;
 import java.sql.SQLException;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.dto.MemberVO;
 import com.spring.request.SearchCriteria;
@@ -108,5 +111,40 @@ public class MemberActionController {
 		}
 		return url;
 	}
+	
+	@RequestMapping("remove.do")
+	public String remove(String id,HttpSession session)throws Exception{
+		String url="member/remove_success";
+
+		MemberVO loginUser = (MemberVO) session.getAttribute("loginUser");
+
+		if (id.equals(loginUser.getId())) { // 로그인 사용자일 경우 불허함.
+			url = "member/remove_denied";
+		}else {
+			try {
+				memberService.remove(id);
+			} catch (SQLException e) {
+				e.printStackTrace();
+				url = "member/remove_fail";
+			}
+		}
+		return url;
+	}
+	
+	@RequestMapping("checkPassword.do")
+	@ResponseBody
+	public ResponseEntity<String> checkPassword(String pwd, HttpSession session, HttpServletResponse response)throws Exception{
+		ResponseEntity<String> entity=null;
+		
+		MemberVO loginUser = (MemberVO)session.getAttribute("loginUser");
+		if(pwd.equals(loginUser.getPwd())) {
+			entity=new ResponseEntity<String>(HttpStatus.OK);
+		}else {
+			entity=new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return entity;
+	}
+	
 	
 }

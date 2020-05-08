@@ -131,11 +131,10 @@
 			url:"checkPassword.do?pwd="+pwd,
 			type:"get",
 			success:function(data){
-				if(data=="SUCCESS"){
 					location.href="remove.do?id=${member.id}";
-				}else{
+			},
+			error:function(error){
 					alert("패스워드가 일치하지 않습니다.");
-				}
 			}
 		});
 /* 		if(pwd=="${loginUser.pwd}"){

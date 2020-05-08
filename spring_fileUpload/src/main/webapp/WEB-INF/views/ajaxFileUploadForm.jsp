@@ -79,7 +79,9 @@ function addFile(file){
 			
 			$(".uploadedList").append(str);
 		},
-		error:function(error){}
+		error:function(error){
+			alert("파일 업로드가 실패했습니다.");
+		}
 	});
 }
 
@@ -105,5 +107,23 @@ function getImageLink(fileName){
 	var end=fileName.substr(14);
 	return front+end;
 }
+
+$('.uploadedList').on('click','small',function(event){
+	var data=$(this).attr("data-src");
+	var that=$(this);
+	var fileData = {fileName:data};
+	$.ajax({
+		url:"deleteFile",
+		type:"post",
+		data:JSON.stringify(fileData),
+		contentType:"application/json",//보내는 data 형식 지정 , 스프링MVC에서는 핸들러어댑터가 오지랖부려서 파라미터로 받아버림. 그래서 contentType을 꼭 추가해줘야함. 추가를 안하면 jackson을 거치지않음
+		success:function(data){
+			that.parent("div").remove();
+		},
+		error:function(error){
+			alert("첨부 파일 삭제를 실패했습니다.");
+		}
+	});
+});
 </script>
 </html>

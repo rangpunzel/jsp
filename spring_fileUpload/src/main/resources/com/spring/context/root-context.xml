@@ -6,9 +6,10 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	<context:property-placeholder location="classpath:com/spring/properites/*.properties"/>
+	<context:property-placeholder location="classpath:com/spring/properties/*.properties"/>
 	
 	<bean id="uploadPath" class="java.lang.String">
-		<constructor-arg value="${roodPath}"/>
+		<constructor-arg value="${rootPath}" />
 	</bean>
+	 	
 </beans>

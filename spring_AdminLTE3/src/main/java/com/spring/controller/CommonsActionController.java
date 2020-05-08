@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.spring.dto.MemberVO;
 import com.spring.exception.InvalidPasswordException;
@@ -23,6 +24,7 @@ public class CommonsActionController {
 		this.memberService=memberService;
 	}
 	
+	//@RequestMapping(value= {"/","commons/loginForm.do"})
 	@RequestMapping("loginForm.do")
 	public String loginForm()throws Exception{
 		String url="commons/loginForm";
@@ -30,25 +32,35 @@ public class CommonsActionController {
 		return url;
 	}
 	
-	@RequestMapping("login.do")
-	public String login(HttpServletRequest request,String id, String pwd)throws Exception{
+	@RequestMapping(value="login.do",method=RequestMethod.POST)
+	public String loginPost(HttpServletRequest request,String id, String pwd,HttpSession session)throws Exception{
 		String url="redirect:/member/list.do";
 		
-		try {
-		memberService.login(id, pwd);
-		HttpSession session = request.getSession();
+		//로그인 실패시 추가한 attribute를 삭제.
+		session.removeAttribute("msg");
 		
-		MemberVO loginUser=memberService.getMember(id);
-		session.setAttribute("loginUser", loginUser);
-		session.setMaxInactiveInterval(60*6);
+		String message=null;
+		try {
+			memberService.login(id, pwd);
+			
+			MemberVO loginUser=memberService.getMember(id);
+			if(loginUser.getEnabled()==0) {
+				message="사용중지된 아이디로 이용이 제한됩니다.";
+				url="redirect:/commons/loginForm.do";
+			}else {
+			session.setAttribute("loginUser", loginUser);
+			session.setMaxInactiveInterval(60*6);
+			}
 		}catch(SQLException e) {
 			e.printStackTrace();
 			url="error/500_error";
 			request.setAttribute("exception", e);
 		}catch(NotFoundIDException | InvalidPasswordException e) {
+			message="아이디가 존재하지않거나 비밀번호가 일치하지않습니다.";
 			url="redirect:/commons/loginForm.do";
-			request.setAttribute("msg", e.getMessage());
 		}
+		request.setAttribute("msg", message);
+		request.setAttribute("id", id);
 		return url;
 	}
 	

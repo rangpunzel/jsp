@@ -17,7 +17,7 @@
 </head>	
 	
 <body>
-  <c:set var="pageMaker" value="${dataMap.pageMaker }" />	  	
+ 	
    <div class="content-wrapper" >
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -73,14 +73,14 @@
 						<th>등록일</th>
 						<th style="width:10%;">조회수</th>
 					</tr>	
-					<c:if test="${empty dataMap.pdsList }" >
+					<c:if test="${empty pdsList }" >
 						<tr>
 							<td colspan="5">
 								<strong>해당 내용이 없습니다.</strong>
 							</td>
 						</tr>
 					</c:if>	
-					<c:forEach items="${dataMap.pdsList }" var="pds">
+					<c:forEach items="${pdsList }" var="pds">
 						<tr>
 							<td>${pds.pno }</td>
 							<td id="pdsTitle" style="text-align:left;max-width: 100%; 

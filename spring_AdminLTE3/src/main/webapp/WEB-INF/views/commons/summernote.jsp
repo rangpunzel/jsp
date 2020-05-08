@@ -40,15 +40,18 @@
 		form_data.append("file",file);
 		
 		$.ajax({
+			url:'<%=request.getContextPath()%>/uploadImg.do',
 			data: form_data,
 			type:"POST",
-			url:'<%=request.getContextPath()%>/uploadImg.do',
 			cache:false,
 			contentType:false,
 			processData:false,
 			success:function(img_url){
 				/* editor.insertImage 이미지태그를 생성해줌 */
 				$(el).summernote('editor.insertImage',img_url);
+			},
+			error:function(error){
+				alert("이미지 첨부에 실패했습니다.");
 			}
 	 	});
 	}
@@ -65,6 +68,7 @@
 		$.ajax({
 			url:"<%=request.getContextPath()%>/deleteImg.do",
 			data : JSON.stringify(fileData),
+			contentType:"application/json",
 			type:"post",
 			success:function(res){
 				console.log(res);

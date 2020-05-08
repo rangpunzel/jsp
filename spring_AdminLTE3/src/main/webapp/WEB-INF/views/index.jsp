@@ -3,6 +3,5 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 
 <script>
-	alert("글을 삭제합니다.");
-	window.close();
+	location.href="<%=request.getContextPath()%>/commons/loginForm.do";
 </script>
