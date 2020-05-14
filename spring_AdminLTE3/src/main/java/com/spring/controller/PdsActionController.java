@@ -32,13 +32,13 @@ public class PdsActionController {
 
 	@Autowired
 	private PdsService pdsService;
-	public void setPdsService(PdsService pdsService) {
+/*	public void setPdsService(PdsService pdsService) {
 		this.pdsService=pdsService;
-	}
+	}*/
 	
 	@RequestMapping("list.do")
 	public ModelAndView list(SearchCriteria cri, ModelAndView mnv)throws Exception{
-		String url="pds/list";
+		String url="pds/list.page";
 		Map<String, Object> dataMap = pdsService.getList(cri);
 		
 		mnv.addAllObjects(dataMap); //Model에 심기
@@ -49,7 +49,7 @@ public class PdsActionController {
 	
 	@RequestMapping("registForm.do")
 	public ModelAndView registForm(ModelAndView mnv)throws Exception{
-		String url = "pds/regist";
+		String url = "pds/regist.open";
 		mnv.setViewName(url);
 		return mnv;
 	}
@@ -75,7 +75,7 @@ public class PdsActionController {
 	
 	@RequestMapping("detail.do")
 	public ModelAndView detail(ModelAndView mnv,int pno)throws Exception{
-		String url = "pds/detail";
+		String url = "pds/detail.open";
 		PdsVO pds = pdsService.getPds(pno);
 		
 		mnv.addObject("pds",pds); //Model에 심기
@@ -85,7 +85,7 @@ public class PdsActionController {
 	
 	@RequestMapping("modifyForm.do")
 	public ModelAndView modifyForm(ModelAndView mnv,int pno)throws Exception{
-		String url = "pds/modify";
+		String url = "pds/modify.open";
 		
 		PdsVO pds = pdsService.getPds(pno);
 		

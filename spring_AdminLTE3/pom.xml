@@ -37,6 +37,7 @@
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 		<imgscalr-version>4.2</imgscalr-version>
+		<apache.tiles-version>3.0.8</apache.tiles-version>
 	</properties>
 	<dependencies>
 		<!-- Spring -->
@@ -125,6 +126,14 @@
 		    <artifactId>imgscalr-lib</artifactId>
 		    <version>${imgscalr-version}</version>
 		</dependency>
+		
+		<!-- tiles-extras -->
+		<dependency>
+		    <groupId>org.apache.tiles</groupId>
+		    <artifactId>tiles-extras</artifactId>
+		    <version>${apache.tiles-version}</version>
+		</dependency>
+		
 				
 		<!-- AspectJ -->
 		<dependency>

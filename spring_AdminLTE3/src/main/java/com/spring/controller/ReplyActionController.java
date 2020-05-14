@@ -25,9 +25,9 @@ public class ReplyActionController {
 
 	@Autowired
 	private ReplyService replyService;
-	public void setReplyService(ReplyService replyService) {
+/*	public void setReplyService(ReplyService replyService) {
 		this.replyService=replyService;
-	}
+	}*/
 	
 	//ResponseBody는 스트링을 body에 붙여서 내보낸다.
 	@RequestMapping("list.do")

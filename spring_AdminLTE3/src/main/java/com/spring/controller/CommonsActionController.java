@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -20,15 +21,15 @@ import com.spring.service.MemberService;
 public class CommonsActionController {
 	@Autowired
 	private MemberService memberService;
-	public void setMemberService(MemberService memberService) {
+/*	public void setMemberService(MemberService memberService) {
 		this.memberService=memberService;
-	}
+	}*/
 	
 	//@RequestMapping(value= {"/","commons/loginForm.do"})
 	@RequestMapping("loginForm.do")
-	public String loginForm()throws Exception{
+	public String loginForm(Model model)throws Exception{
 		String url="commons/loginForm";
-				
+		model.addAttribute("title","로그인");
 		return url;
 	}
 	
@@ -65,8 +66,10 @@ public class CommonsActionController {
 	}
 	
 	@RequestMapping("logout.do")
-	public String logout()throws Exception{
-		String url="redirect:/commons/loginForm.do";
+	public String logout(HttpSession session, Model model)throws Exception{
+		String url="commons/logout";
+		session.invalidate();
+		model.addAttribute("msg", "로그아웃 되었습니다.");
 		return url;
 	}
 }

@@ -20,16 +20,12 @@ function idCheck_go(){
 		type:'post',
 		dataType:'text',
 		success:function(data){
-			if(data==id){
 				$('input[name="checkid"]').val(1);
 				alert("사용 가능한 아이디입니다.");
-ㄴ			}else{
+		},
+		error:function(error){
 				alert("이미 사용중인 아이디 입니다.");	
 				$('input#id').focus();
-			}
-		},
-		error:function(xhr,exception){
-			alert("중복체크를 실패했습니다.");
 		}
 	});
 }

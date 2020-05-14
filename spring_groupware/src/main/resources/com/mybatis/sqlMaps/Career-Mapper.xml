@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Career-Mapper">
+	
+	<select id="selectCareerList" resultType='career'>
+		select *
+		from career		
+		where id=#{id}
+	</select>
+	
+	<update id="insertCareer" >
+		insert into career(cno,id,coname,dept,position,job,startDay,endDay)
+		values(career_seq.nextval,#{id},#{coName},#{dept},#{position},#{job},#{startDay},#{endDay})
+	</update>
+	
+	<update id="updateCareer">
+		update career set
+		coName=#{coName},dept=#{dept}, position=#{position},
+		startDay=#{startDay},endDay=#{endDay}
+		where cno=#{cno} and id=#{id}
+	</update>
+	
+	<update id="deleteCareer">
+		delete 
+		from career
+		where cno=#{cno} and id=#{id}
+	</update>
+	<update id="deleteAllCareers">
+		delete 
+		from career
+		where id=#{id}
+	</update>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+

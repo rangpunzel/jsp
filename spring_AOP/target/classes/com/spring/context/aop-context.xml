@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns ="http://www.springframework.org/schema/aop" 
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+
+	<config>
+		<aspect id="이가썩지않는방법" ref="양치하기">
+			<pointcut id="잠자기"
+					  expression="execution(public * com.spring.behavior..잠자기*(..))"/>
+			<pointcut id="식사하기"
+					  expression="execution(public * com.spring.behavior..밥먹기*(..))"/>
+			
+			<before method="chikachika" pointcut-ref="잠자기"/>
+			<after method="chikachika" pointcut-ref="식사하기"/>
+		</aspect>
+	</config>
+	
+</beans:beans>

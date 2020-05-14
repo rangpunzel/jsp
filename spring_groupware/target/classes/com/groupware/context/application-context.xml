@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+		        
+	<!-- pds attach -->
+	<bean id="uploadPath" class="java.lang.String">
+		<constructor-arg value="${filePath.pds.attach}"/>
+	</bean>
+	
+	<!-- employee docuement -->
+	<bean id="employeeAttachPath" class="java.lang.String">
+		<constructor-arg value="${filePath.employee.document}"/>
+	</bean>
+	
+	<bean id="picture" class="java.lang.String">
+		<constructor-arg value="${filePath.employee.picture}"/>
+	</bean>
+	
+	<!-- summernote -->
+	<bean id="imgPath" class="java.lang.String">
+		<constructor-arg value="${filePath.board.images}"/>
+	</bean>
+	
+	
+	<!-- DAO -->	
+	<bean id="menuDAO"
+		  class="com.groupware.dao.menu.MenuDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+		  />		
+	<bean id="mybatisBoardDAO"
+	      class="com.groupware.dao.board.MybatisBoardDAOImpl"
+	      p:session-ref="sqlSession"
+	      />      
+	<bean id="pageMybatisBoardDAO"
+		  class="com.groupware.dao.board.PageMybatisBoardDAOImpl"
+		  p:session-ref="sqlSession"
+		  p:instance-ref="mybatisBoardDAO"
+		  />
+	<bean id="replyDAO"
+		  class="com.groupware.dao.board.ReplyDAOImpl"
+		  p:session-ref="sqlSession"
+		  />
+	<bean id="employeeDAO"
+		  class="com.groupware.dao.employee.EmployeeDAOImpl"
+		  p:session-ref="sqlSession"
+		  />
+	<bean id="careerDAO"
+		  class="com.groupware.dao.employee.CareerDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+		  />
+	<bean id="deptDAO"
+		  class="com.groupware.dao.employee.DepartmentDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+		  />
+	<bean id="positionDAO"
+		  class="com.groupware.dao.employee.PositionDAOImpl"
+		  p:sqlSession-ref="sqlSession"
+		  />
+		        
+	<!-- Service -->
+	<bean id="menuService"
+	      class="com.groupware.service.menu.MenuServiceImpl"
+	      p:menuDAO-ref="menuDAO"     
+	      />
+	<bean id="boardService"
+	      class="com.groupware.service.board.BoardServiceImpl"
+	      p:boardDAO-ref="pageMybatisBoardDAO"
+	      p:replyDAO-ref="replyDAO"
+	      />
+	 <bean id="replyService"
+	 	   class="com.groupware.service.board.ReplyServiceImpl"
+	       p:replyDAO-ref="replyDAO"
+	 	   />
+	 <bean id="employeeService"
+	 	   class="com.groupware.service.employee.EmployeeServiceImpl"
+	 	   p:employeeDAO-ref="employeeDAO"
+	 	   p:careerDAO-ref="careerDAO"
+	        />
+	 <bean id="deptService"
+	 	   class="com.groupware.service.employee.DepartmentServiceImpl"
+	 	   p:deptDAO-ref="deptDAO"
+	 	   p:employeeDAO-ref="employeeDAO"
+	        />
+	 <bean id="positionService"
+	 	   class="com.groupware.service.employee.PositionServiceImpl"
+	 	   p:positionDAO-ref="positionDAO"
+	        />
+
+	
+</beans>

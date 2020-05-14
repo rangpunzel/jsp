@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>	
+	
+	<typeAliases>
+		<typeAlias type="java.lang.String" alias="str"/>
+		<typeAlias type="java.lang.Integer" alias="int"/>		
+		<typeAlias type="com.groupware.dto.EmployeeVO" alias="employee"/>
+		<typeAlias type="com.groupware.dto.BoardVO" alias="board"/>
+		<typeAlias type="com.groupware.dto.ReplyVO" alias="reply"/>
+		<typeAlias type="com.groupware.dto.PdsAttachVO" alias="pdsach"/>
+		<typeAlias type="com.groupware.dto.PdsVO" alias="pds"/>
+		<typeAlias type="com.groupware.dto.NoticeVO" alias="notice"/>
+		<typeAlias type="com.groupware.dto.NoticeAttachVO" alias="nattach"/>		
+		<typeAlias type="com.groupware.dto.PositionVO" alias="position"/>
+		<typeAlias type="com.groupware.dto.DepartmentVO" alias="dept"/>
+		<typeAlias type="com.groupware.dto.CareerVO" alias="career"/>
+		<typeAlias type="com.groupware.dto.PdsShareVO" alias="pdsShare"/>
+		<typeAlias type="com.groupware.dto.MenuVO" alias="menu"/>
+		<typeAlias type="com.groupware.request.SearchCriteria" alias="cri"/>
+		
+	</typeAliases>
+	
+	
+	
+</configuration>
+
+
+
+
+
+
+

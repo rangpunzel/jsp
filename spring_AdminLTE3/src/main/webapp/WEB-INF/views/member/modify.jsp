@@ -41,7 +41,7 @@
 								<div class="" id="pictureView" style="border: 1px solid green; height: 200px; width: 140px; margin: 0 auto; margin-bottom:5px;"></div>														
 								<div class="input-group input-group-sm">
 									<label for="inputFile" class=" btn btn-warning btn-sm btn-flat input-group-addon">파일선택</label>
-									<input id="inputFileName" class="form-control" type="text" name="picture"/>
+									<input id="inputFileName" class="form-control" type="text" name="pictureN"/>
 									<span class="input-group-append-sm">											
 										<button type="button" class="btn btn-info btn-sm btn-append" onclick="upload_go();">업로드</button>											
 									</span>

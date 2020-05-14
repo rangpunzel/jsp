@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Employee-Mapper">
+	
+	<sql id="search">
+		
+		<if test="searchType == 'n'.toString()">
+			and name like '%'||#{keyword}||'%'			
+		</if>
+		<if test="searchType == 'i'.toString()">
+			and id like '%'||#{keyword}||'%'			
+		</if>
+		<if test="searchType == 'p'.toString()">
+			and (phone_c like '%'||#{keyword}||'%' or phone_p like '%'||#{keyword}||'%')			
+		</if>
+		<if test="searchType == 'e'.toString()">
+			and email like '%'||#{keyword}||'%'			
+		</if>		
+	</sql>
+	
+	<select id="selectEmployeeList" resultType="employee">
+		select 
+		* 
+		from employee
+	</select>
+	<select id="selectSearchEmployeeList" resultType="employee">
+		select
+		* 
+		from employee
+		where id is not null
+		<include refid="search" />
+	</select>
+	
+	<select id="selectEmployeeById" resultType="employee">
+		select 
+		* 
+		from employee 
+		where id=#{id}
+	</select>
+	
+	<select id="selectEmployeeListByDeptNo" resultType="employee">
+		select
+		*
+		from employee
+		where dept_no=#{dept_no}
+		order by position desc
+	</select>
+	
+	<select id="deptEmpCount" resultType="int">
+		select count(*)
+		from member
+		where dept_no = #{dept_no}
+	</select>
+	
+	
+	<update id="insertEmployee" parameterType="employee">
+		insert into 
+		member(id, pwd, email, picture,dept_no,posi_no,phone_p,
+				 phone_c,name,enum,register,postCode,address1,address2,remark,
+				 licenseDoc,graduDoc,scoreDoc,ssn)
+		values(#{id},#{pwd},#{email},#{picture},#{dept_no},#{posi_no},#{phone_p},
+			   #{phone_c},#{name},#{eno},#{register},#{postCode},#{address1},#{address2},#{remark},
+			   #{licenseDoc},#{graduDoc},#{scoreDoc},${ssn}
+		)
+	</update>
+	
+	<update id="updateEmployee" parameterType="employee">
+		update member 
+		set 
+		pwd=#{pwd}, email=#{email}, picture=#{picture},dept_no=#{dept_no},
+		posi_no=#{posi_no},phone_p=#{phone_p},phone_c=#{phone_c},name=#{name},
+		enum=#{eno},register=#{register},postCode=#{postCode},address1=#{address1},
+		address2=#{address2},remark=#{remark},licenseDoc=#{licenseDoc},
+		graduDoc=#{graduDoc},scoreDoc=#{scoreDoc},ssn=#{ssn}
+		
+		<if test="authority != null">
+			,authority=#{authority}
+		</if>
+		
+		where id=#{id}
+	</update>
+	
+	<update id="deleteEmployee" parameterType="str" >
+		delete 
+		from member 
+		where id=#{id}		
+	</update>
+	
+	<update id="disableEmployee" >
+		update 
+		member
+		set
+		enabled=0
+		where id=#{id}
+	</update>
+		
+	<update id="updateRecentLoginTime" >
+		update member 
+		set
+		recentLoginTime = sysdate
+		where id=#{id}	
+	</update>
+</mapper>
+
+
+
+
+
+
+
+
+
+
