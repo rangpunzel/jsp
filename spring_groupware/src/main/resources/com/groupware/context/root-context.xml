@@ -11,4 +11,5 @@
 	<import resource="classpath:com/groupware/context/dataSource-context.xml"/>	
 	<import resource="classpath:com/groupware/context/application-context.xml"/>
 	<import resource="classpath:com/groupware/context/aop-context.xml"/>
+	<import resource="classpath:com/groupware/context/security-centext.xml"/>
 </beans>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<http pattern="/resources/**" security="none"/>
+	
+	<authentication-manager>
+		<authentication-provider>
+			<jdbc-user-service data-source-ref="dataSource"
+				users-by-username-query="select id as username,pwd as password, enabled
+										from employee
+										where id=?"
+				authorities-by-username-query="select id as username, authority
+												from employee
+												where id=?"
+			/>
+		</authentication-provider>
+	</authentication-manager>
+	
+	<http use-expressions="true" pattern="/**">
+		<access-denied-handler error-page="/security/accessDenied"/>
+		<intercept-url pattern="/commons/**" access="permitAll"/>
+		
+		<intercept-url pattern="/board/regist*" 
+		access="hasAnyRole('ROLE_USER,ROLE_ADMIN,ROLE_SUPER,ROLE_VIP,ROLE_VVIP')"/>
+		
+		<intercept-url pattern="/**/regist*" 
+		access="hasAnyRole('ROLE_ADMIN,ROLE_SUPER,ROLE_VIP,ROLE_VVIP')"/>
+		<intercept-url pattern="/**/modify*" 
+		access="hasAnyRole('ROLE_ADMIN,ROLE_SUPER,ROLE_VIP,ROLE_VVIP')"/>
+		<intercept-url pattern="/**/remove*" 
+		access="hasAnyRole('ROLE_ADMIN,ROLE_SUPER,ROLE_VIP,ROLE_VVIP')"/>			
+		<intercept-url pattern="/**" access="isAuthenticated()"/>	
+		
+		<form-login
+			login-page="/commons/login"
+			login-processing-url="/commons/loginPost"
+			username-parameter="id"
+			password-parameter="pwd"
+			default-target-url="/index.htm"
+			authentication-success-handler-ref="loginSuccessHandler"
+		/>
+		<logout
+			logout-url="/commons/logout"
+			invalidate-session="true"
+			delete-cookies="JSESSIONID"
+		/>
+	</http>
+	
+	<beans:bean id="loginSuccessHandler"
+				class="com.groupware.security.LoginSuccessHandler"
+				p:defaultTargetUrl="/index.htm"/>
+</beans:beans>

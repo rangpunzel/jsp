@@ -7,15 +7,16 @@
 <c:forEach items="${subMenuList }" var="subMenu">
 
 <li class="">
-	<a data-mcode="${subMenu.MCode}" data-url="${subMenu.url }" href="javascript:reURL('${subMenu.MCode }')"
-		onclick = "	   
+	<a data-mcode="${subMenu.MCode}" href="javascript:reURL('${subMenu.MCode }')"
 	   	<c:if test="${empty subMenu.jsText}" >
-	   		onSubMenu('${subMenu.MCode}');	
+	   		data-url="${subMenu.url }"
+	   		onclick="onSubMenu('${subMenu.MCode}');"
 	   	</c:if>	   		
 	   	<c:if test="${!empty subMenu.jsText}">
-	   		${subMenu.jsText }
+	   		data-url=""
+	   		onclick="${subMenu.jsText }"
 	   	</c:if>
-	 ">		   						
+	 >		   						
 		<i class="${subMenu.iconFile }" ></i>
 		<span class="menu-text">${subMenu.codeName}</span>
 	</a>

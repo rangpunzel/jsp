@@ -378,8 +378,17 @@ $('#regDate').datepicker("option", "minDate", $("#regDate").val() );
 
 /* 경력추가 */
 function RegistCareer(){
-	
+
 }
+
+$('#eno').on('click',function(){
+	//입사일
+	
+	//부서번호
+	var dept=$("select[name=dept_no] option:selected").val();
+
+});
+
 
 </script>
 </body>

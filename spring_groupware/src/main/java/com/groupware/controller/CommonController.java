@@ -53,4 +53,9 @@ public class CommonController {
 		
 		return url;
 	}
+	
+	@RequestMapping("/commons/login")
+	public void loginForm() {
+		
+	}
 }
