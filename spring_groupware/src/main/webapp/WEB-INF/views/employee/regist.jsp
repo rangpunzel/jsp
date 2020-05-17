@@ -251,7 +251,7 @@ div#picturePreView{
 							<div class="col-sm-4" style="padding:2px 1px;">								
 								<label for="licenseDoc" class="label" style="width:100%;">주민등록등본</label>	
 								<div class="input-group">							
-									<input class="col-sm-12 no-padding" type="file" id="licenseDoc" name="licenseDoc"/>
+									<input class="col-sm-12 no-padding" type="file" id="licenseDoc" name="Upload"/>
 									<span class='input-group-btn'>
 										<button class="btn btn-xs btn-danger" type='button' data-role="licenseDoc"  ><b>X</b></button>
 									</span>
@@ -290,104 +290,22 @@ div#picturePreView{
 			</div>	
 		</form>
 	</div>
-<%-- <%@ include file="regist_js.jsp" %> --%>
+<%@ include file="regist_js.jsp" %>
 
-<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-/* 아이디 중복체크 */
-function CheckID(){
-	var id= $('input#id').val();
-	if(!id){
-		alert("아이디를 입력하세요.");
-		return;
+
+function goSubmit(q){
+	if(q=='close'){
+		window.close();
 	}
-	$.ajax({
-		url:"<%=request.getContextPath()%>/employee/regist/checkId",
-		data:{"id":id},
-		type:'post',
-		dataType:'text',
-		success:function(data){
-			$('input[name="checkID"]').val(id);
-			alert("중복된 아이디가 없습니다.");
-		},
-		error:function(error){
-			alert("이미 사용중인 아이디입니다.");
-			$('input#id').focus();
-		}
-	});
+	
+	
+	var form = document.getElementById('registForm');
+	alert(form);
+	if(q=='post'){
+		form.submit();
+	}
 }
-
-/* 사진 업로드 */
-$('input#picture').on('change',function(event){
-	var fileFormat=this.value.substr(this.value.lastIndexOf(".")+1).toUpperCase();
-	//이미지 확장자 jpg 확인
-	if(fileFormat!="JPG"){
-		alert("이미지는 jpg 형식만 가능합니다.");
-		return;
-	}
-	//이미지 파일 용량 체크
-	if(this.files[0].size>1024*1024*1){
-		alert("사진 용량은 1MB 이하만 가능합니다.");
-		return;
-	}
-	
-	if(this.files && this.files[0]){
-		
-		var reader = new FileReader();
-		
-		reader.onload = function (e){
-			//이미지 미리보기
-			$('div#picturePreView').css({
-				'background-image':'url('+e.target.result+')',
-				'background-position':'center',
-				'background-size':'cover',
-				'background-repeat':'no-repeat'
-			});
-		}
-		
-		reader.readAsDataURL(this.files[0]);
-	}
-	
-	
-});
-
-/* 직접입력 선택하면 계정선택 비활성화 활성화 */
-$('input#directInput').on('change',function(event){
-	if($('input#directInput').prop("checked")){
-		$('select[name=email]').prop('disabled',true);
-	}else{
-		$('select[name=email]').prop('disabled',false);
-	}
-});
-
-/* 주소검색 */
-function SearchAddress(){
-	$('#postCode').val("");
-	$('input[name=address1]').val("");
-	
-    new daum.Postcode({
-        oncomplete: function(data) {
-        	$('#postCode').val(data.zonecode);
-        	$('input[name=address1]').val(data.address);
-        }
-    }).open();
-}
-
-/* 데이트픽커 */
-$('#regDate').datepicker("option", "minDate", $("#regDate").val() );
-
-/* 경력추가 */
-function RegistCareer(){
-
-}
-
-$('#eno').on('click',function(){
-	//입사일
-	
-	//부서번호
-	var dept=$("select[name=dept_no] option:selected").val();
-
-});
 
 
 </script>

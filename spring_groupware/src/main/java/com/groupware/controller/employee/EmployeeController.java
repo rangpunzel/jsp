@@ -1,9 +1,12 @@
 package com.groupware.controller.employee;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -87,4 +90,27 @@ public class EmployeeController {
 		}
 		return entity;
 	}
+	
+	@RequestMapping("/regist/getDeptCount")
+	@ResponseBody
+	public ResponseEntity<Integer> getDeptCount(String dept)throws Exception{
+		ResponseEntity<Integer> entity=null;
+		
+		try {
+			int cnt = employeeService.getdeptEmpCount(dept);
+			entity = new ResponseEntity<Integer>(cnt+1,HttpStatus.OK);
+		}catch(SQLException e) {
+			e.printStackTrace();
+			entity=new ResponseEntity<Integer>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return entity;
+	}
+	
+	@RequestMapping(value="regist",method=RequestMethod.POST,produces="text/plain;charset=utf-8")
+	public void regist(EmployeeVO employee, HttpServletRequest request, HttpServletResponse response)throws Exception{
+		
+		System.out.println(employee);
+		
+	}
+
 }
