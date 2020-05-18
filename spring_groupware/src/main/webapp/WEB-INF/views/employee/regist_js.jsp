@@ -259,6 +259,7 @@ function docSubmit(){
 		
 	}
 	}
+	console.log(form);
 	if (!confirm("저장 하시겠습니까?")) return false;
 	
 
@@ -266,8 +267,7 @@ function docSubmit(){
 	
 	
 	waitMsg();	/* Processing message */
-	
-	controlSubmit(form);
+	controlSubmit(registForm);
 }
 
 
