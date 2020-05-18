@@ -11,7 +11,7 @@
 			<li>게시판</li>
 			<li class="active">자유게시판</li>
 		</ul>
-		<%-- <%@ include file="/WEB-INF/views/commons/user_label.jsp" %> --%>
+		<%@ include file="/WEB-INF/views/commons/user_label.jsp" %>
 	</div>
 	<!-- Page Path Ends -->
 	<!-- Page Content Begins -->	

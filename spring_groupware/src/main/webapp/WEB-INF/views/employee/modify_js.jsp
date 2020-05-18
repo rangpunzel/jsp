@@ -4,8 +4,8 @@
 
 
 <script>
-	//입사날짜 datepicker
-	$('input[name="regDate"]').datepicker({});
+	//날짜 datepicker
+	$('input[data-target="year"]').datepicker({});
 	
 	/* 이메일 직접선택 */
 	$('#directInput').on('change',function(){
@@ -16,81 +16,22 @@
 		}
 	});
 	
-	/* 직원번호 생성시 부서선택으로 전환 */
-	$('input[name="eno"]').on('click',function(){
-		var dept = $('select[name="dept_no"]');
-		if(!dept.val()){
-			alert('부서를 선택하세요.');
-			dept.focus();
-		}else{
-						
-		}
-	});
-	
-	/* 부서 선택 (직원번호 생성기 호출) */
-	$('select[name="dept_no"]').on('change',function(){
-		
-		if($(this).val()){
-			createEmpNumber($(this));
-		}else{
-			$('input[name="eno"]').val("");
-		}
-	});
-	
-	/* 직원번호생성  */
-	function createEmpNumber(dept){
-		//alert(new Date().format("yy-MM-dd"));
-		$.getJSON("deptEmpCount?dept_no="+dept.val(),function(data){
-			var eno = new Date().format("yyMMdd")+dept.val();  			
-			var temp="000"+(data+1);
-			eno+=temp.substr(temp.length-3);
-			$('input[name="eno"]').val(eno);				
-		});
-	}   
-	
-	/* 중복아이디 체크 */
-	function CheckID(){
-		var id = $('input[name="id"]');
-		if(!id.val()){
-			alert("아이디를 입력하세요.")
-			id.focus();
-			return;
-		}	
-		
-		$.ajax({
-			url:"checkId",
-			type:"get",
-			data:{"id":id.val()},
-			success:function(data){
-				if(data.result){
-					$('input[name="checkID"]').val(id.value);
-					alert("사용가능합니다.");					
-				}else{
-					alert("중복입니다.");
-				}
-			},
-			error:function(data){
-				alert("중복 확인이 불가합니다.\n직원등록을 취소합니다.");
-				window.close();
-			}
-		});
-	}
-	
 	/* 사진업로드 */
 	$('input[name="picture"]').on('change',function(){
 		$('input[name="checkUpload"]').val(0);
 		
+		//이미지 확장자 jpg 확인
 		var fileFormat=
 			this.value.substr(this.value.lastIndexOf(".")+1).toUpperCase();
-		//이미지 확장자 jpg 확인
 		if(fileFormat!="JPG" && fileFormat!="JPEG"){
-			alert("이미지는 jpg 형식만 가능합니다.");
-			return;
-		} 
+			alert("이미지는 jpg 형식만 가능합니다.");			
+			return false;
+		}
+		
 		//이미지 파일 용량 체크
 		if(this.files[0].size>1024*1024*1){
 			alert("사진 용량은 1MB 이하만 가능합니다.");
-			return;
+			return false;
 		};	
 		
 		if (this.files && this.files[0]) {
@@ -147,7 +88,7 @@
 <!-- 경력사항 추가 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.3/handlebars.min.js" ></script>
 <script id="year-template" type="text/x-handlebars-template">
-	<div class="no-padding" name="careers[{{index}}].year" style="text-align:center;">
+	<div class="no-padding" name="career[{{index}}].year" style="text-align:center;">
 		<input class="col-xs-6" type="text" readonly data-target="year" name="careers[{{index}}].startDay" style="text-align:center;" placeholder="입사일"/>	
 		<span class="col-xs-1 text-center" style="margin:0;padding:0;">~</span>							
 		<input class="col-xs-5" type="text" readonly data-target="year" name="careers[{{index}}].endDay" style="text-align:center;" placeholder="퇴사일"/>
@@ -160,7 +101,7 @@
 </script>
 
 <script>
-var careerIndex=0;
+var careerIndex=${careers.size()};
 //compile the template
 
 
@@ -185,10 +126,12 @@ function RegistCareer(){
 	var career_year= Handlebars.compile($('#year-template').html());
 	var career_remove= Handlebars.compile($('#remove-template').html());
 	$('div#year').append(career_year({index:careerIndex}));
-	$('div#remove').append(career_remove({index:careerIndex}));
+	$('div#remove').append(career_remove({index:careerIndex}));	
+	
+	labelHight();
+	$('input[data-target="year"]').datepicker({});
 	careerIndex++;
 	
-	$('input[data-target="year"]').datepicker({})
 }
 
 // 경력삭제 버튼 이벤트 
@@ -201,18 +144,55 @@ $('div#remove').on('click','button',function(){
 	$(this).parent('div').remove();
 });
 
+//첨부문서파일 추가 이벤트
+$('div[data-role="attach"] button.btn-info').on('click',function(){
+	$('input[name='+$(this).attr('name')+']').click();	
+});
+$('div[data-role="attach"] input[type="file"]').on('change',function(){
+	$('input[name="view_'+$(this).attr("name")+'"]').val(this.value);
+});
+
+
 //첨부문서파일 삭제 이벤트
 $('div[data-role="attach"] button.btn-danger').on('click',function(){
-	
 	$('input[name="'+$(this).attr("data-role")+'"]').val("");
+	$('input[name="old_'+$(this).attr("data-role")+'"]').val("");
+	$('input[name="view_'+$(this).attr("data-role")+'"]').val("");
+	
 });
+
+
+
+//라벨 높이 조정
+labelHight();
+function labelHight(){
+	$('label[for="careers"]').css({	
+		"height":$('div#coName').height()+15,
+		"line-height":$('div#coName').height()-2+"px"
+	});
+	
+	
+	$('label[for="attach"]').css({	
+		"height":$('div[data-role="attach"]').height()+4,
+		"line-height":$('div[data-role="attach"]').height()-2+"px"
+	});
+	
+	
+}
+
+function addDocument(msg,target){
+	if(confirm(msg)){
+		$('div[name="'+target+'"]').css("display","block");
+		$('button[name="'+target+'"]').css("display","none");
+	}
+}
 </script>
 
 
 <!-- form submit -->
 <script>
 function goSubmit(cmd){ 
-	var frm = document.getElementById("registForm");
+	var frm = document.getElementById("modifyForm");
 	switch(cmd) {
 		case "post":
 			docSubmit();			
@@ -237,37 +217,24 @@ function validCheck(){
 }
 
 var fileFormData = new FormData();
-var registForm = $('form#registForm');
+var modifyForm = $('form#modifyForm');
 var validator = null;
 
 
 
 
 function docSubmit(){
-	var form = document.getElementById("registForm");
+	var form = document.getElementById("modifyForm");
 	// setEditorForm(); // 에디터의 데이터를 폼에 삽입
     if (!validCheck()) return false;
-	//중복아이디 확인
-	if($('input[name="checkID"]').val()){
-		
-		if($('input[name="checkID"]').val()!=$('input[name="id"]').val()){
-			alert("중복확인된 아이디가 아닙니다.\n다시 중복확인 하세요.");
-			return false;
-		}else{
-			alert("중복아이디 확인은 필수입니다.");
-			return false;
-		
-	}
-	}
 	if (!confirm("저장 하시겠습니까?")) return false;
-	
 
 	$(window).unbind("beforeunload");
 	
 	
 	waitMsg();	/* Processing message */
 	
-	controlSubmit(form);
+	form.submit();
 }
 
 

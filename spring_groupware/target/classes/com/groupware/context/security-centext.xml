@@ -43,6 +43,7 @@
 			password-parameter="pwd"
 			default-target-url="/index.htm"
 			authentication-success-handler-ref="loginSuccessHandler"
+			authentication-failure-handler-ref="loginFailureHandler"
 		/>
 		<logout
 			logout-url="/commons/logout"
@@ -54,4 +55,9 @@
 	<beans:bean id="loginSuccessHandler"
 				class="com.groupware.security.LoginSuccessHandler"
 				p:defaultTargetUrl="/index.htm"/>
+	<beans:bean id="loginFailureHandler"
+				class="com.groupware.security.LoginFailureHandler"
+				p:defaultFailureUrl="/commons/login"
+				p:useForward="true"
+				/>
 </beans:beans>

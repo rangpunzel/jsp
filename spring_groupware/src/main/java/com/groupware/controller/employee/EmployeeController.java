@@ -1,24 +1,39 @@
 package com.groupware.controller.employee;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.groupware.dto.CareerVO;
 import com.groupware.dto.EmployeeVO;
+import com.groupware.exception.IdNotFoundException;
+import com.groupware.exception.InvalidPasswordException;
+import com.groupware.request.RegistEmployeeRequest;
 import com.groupware.request.SearchCriteria;
 import com.groupware.service.employee.DepartmentService;
 import com.groupware.service.employee.EmployeeService;
@@ -40,9 +55,6 @@ public class EmployeeController {
 	@Resource(name="employeeAttachPath")
 	private String employeeAttachPath;
 	
-	@Resource(name="picture")
-	private String picturePath;
-	
 	@RequestMapping("list") //@GetMapping("list") : spring 4.3
 	public ModelAndView list(SearchCriteria cri, ModelAndView mnv) throws Exception{
 		String url="employee/employee_list";
@@ -63,42 +75,97 @@ public class EmployeeController {
 		return url;
 	}
 	
-	@RequestMapping("detail")
-	public String detail(String id, Model model)throws Exception{
-		String url="employee/detail";
+	@RequestMapping(value="regist",method=RequestMethod.POST,produces="text/plain;charset=utf-8")
+	public String registPost(RegistEmployeeRequest empReq, Model model)throws Exception{
+		String url="employee/regist_ok";
 		
-		Map<String, Object> dataMap=employeeService.getEmployee(id);
+		EmployeeVO employee = empReq.toEmployeeVO();
+		List<CareerVO> careers = new ArrayList<CareerVO>();
 		
-		EmployeeVO employee = (EmployeeVO) dataMap.get("employee");
-		EmployeeVO register = (EmployeeVO) employeeService.getEmployee(employee.getRegister()).get("employee");
+		if(careers !=null) {
+			for(CareerVO career : empReq.getCareers()) {
+				career.setId(employee.getId());
+				careers.add(career);
+			}
+		}
 		
-		dataMap.put("register", register);
-		model.addAllAttributes(dataMap);
+		//첨부파일 저장 : picture, licenseDoc, graduDoc, scoreDoc
+		MultipartFile[] files = {empReq.getPicture(), empReq.getLicenseDoc(), empReq.getGraduDoc(),empReq.getScoreDoc()};
+		List<String> saveFileName = new ArrayList<String>();
+		for(MultipartFile file : files) {
+			if(file==null) continue;
+			String fileName = UUID.randomUUID().toString().replace("-", "")+"$$"+file.getOriginalFilename();
+			File savePath = new File(employeeAttachPath + File.separator+employee.getId());
+			if(!savePath.exists()) {
+				savePath.mkdirs();
+			}
+			
+			file.transferTo(new File(savePath, fileName));
+			saveFileName.add(fileName);
+		}
+		
+		//EmployeeVO에 각 attach set.
+		employee.setPicture(saveFileName.get(0));
+		employee.setLicenseDoc(saveFileName.get(1));
+		employee.setGraduDoc(saveFileName.get(2));
+		employee.setScoreDoc(saveFileName.get(3));
+		
+		System.out.println(employee);
+		System.out.println(careers);
+		
+		employeeService.regist(employee,careers);
+		
+		model.addAttribute("employee",employee);
 		
 		return url;
 	}
 	
-	@RequestMapping("/regist/checkId")
-	@ResponseBody
-	public ResponseEntity<String> checkId(String id)throws Exception{
-		ResponseEntity<String> entity=null;
-		try {
-			Map<String, Object> dataMap= employeeService.getEmployee(id);
-			entity = new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}catch(NullPointerException e) {
-			entity = new ResponseEntity<String>(HttpStatus.OK);
-		}
-		return entity;
+	@RequestMapping("/detail")
+	public String detail(String id, Model model) throws Exception {
+		String url = "employee/detail";
+
+		Map<String, Object> dataMap = employeeService.getEmployee(id);
+
+		EmployeeVO employee = (EmployeeVO) dataMap.get("employee");
+		EmployeeVO register = 
+		(EmployeeVO) employeeService.getEmployee(employee.getRegister()).get("employee");
+
+		dataMap.put("register", register);
+		model.addAllAttributes(dataMap);
+
+		return url;
 	}
 	
-	@RequestMapping("/regist/getDeptCount")
+	@RequestMapping("/checkId")
 	@ResponseBody
-	public ResponseEntity<Integer> getDeptCount(String dept)throws Exception{
+	public ResponseEntity<Map<String,Boolean>> checkId(String id,HttpServletResponse response)throws Exception{
+		ResponseEntity<Map<String,Boolean>> entity=null;
+		
+		Map<String, Boolean> result = new HashMap<String, Boolean>();
+		
+		try {
+			employeeService.login(id, "");
+		}catch(IdNotFoundException e) { //중복 아이디 없음
+			result.put("result", true);
+		}catch(InvalidPasswordException e) {//아이디가 존재
+			result.put("result", false);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<Map<String, Boolean>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+			
+			entity = new ResponseEntity<Map<String, Boolean>>(result,HttpStatus.OK);
+			return entity;
+	}
+	
+	@RequestMapping("/deptEmpCount")
+	@ResponseBody
+	public ResponseEntity<Integer> deptEmpCount(@RequestParam("dept_no") String deptNum)throws Exception{
 		ResponseEntity<Integer> entity=null;
 		
 		try {
-			int cnt = employeeService.getdeptEmpCount(dept);
-			entity = new ResponseEntity<Integer>(cnt+1,HttpStatus.OK);
+			int count = employeeService.getdeptEmpCount(deptNum);
+			entity = new ResponseEntity<Integer>(count+1,HttpStatus.OK);
 		}catch(SQLException e) {
 			e.printStackTrace();
 			entity=new ResponseEntity<Integer>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -106,10 +173,51 @@ public class EmployeeController {
 		return entity;
 	}
 	
-	@RequestMapping(value="regist",method=RequestMethod.POST,produces="text/plain;charset=utf-8")
-	public void regist(EmployeeVO employee, HttpServletRequest request, HttpServletResponse response)throws Exception{
+	@RequestMapping("receiveDoc")
+	@ResponseBody
+	public ResponseEntity<byte[]> recieveDoc(String fileName, String id)throws Exception{
+		ResponseEntity<byte[]> entity=null;
 		
-		System.out.println(employee);
+		InputStream in = null;
+		
+		HttpHeaders headers = new HttpHeaders();
+		
+		String savePath=employeeAttachPath + File.pathSeparator+id;
+		try {
+			in = new FileInputStream(savePath + File.separator + fileName);
+			
+			fileName = fileName.substring(fileName.indexOf("$$")+2);
+			
+			headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+			headers.add("Content-Disposition", "attachment;filename=\""+new String(fileName.getBytes("utf-8"),"ISO-8859-1")+"\"");
+			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in),headers,HttpStatus.CREATED);
+		}catch(IOException e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<byte[]>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}finally {
+			in.close();
+		}
+		
+		return entity;
+	}
+	
+	@RequestMapping(value="/modify",method=RequestMethod.GET)
+	public String modifyGET(String id, Model model)throws Exception{
+		String url="employee/modify";
+		
+		Map<String,Object> dataMap=employeeService.getEmployee(id);
+		
+		EmployeeVO employee = (EmployeeVO) dataMap.get("employee");
+		EmployeeVO register = (EmployeeVO) employeeService.getEmployee(employee.getRegister()).get("employee");
+		
+		dataMap.put("register", register);
+		
+		model.addAttribute("positionList",positionService.getPosotionList());
+		model.addAttribute("deptList",deptService.getDeptList());
+		
+		model.addAllAttributes(dataMap);
+		
+		return url;
 		
 	}
 

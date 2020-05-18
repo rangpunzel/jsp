@@ -32,7 +32,7 @@ body {
 					새문서
 			</li>
 		</ul>
-		<%-- <%@ include file="/WEB-INF/views/commons/user_label.jsp" %> --%>
+		<%@ include file="/WEB-INF/views/commons/user_label.jsp" %>
 	</div>
 	<!-- Page Path Ends -->
 	

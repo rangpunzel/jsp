@@ -291,24 +291,6 @@ div#picturePreView{
 		</form>
 	</div>
 <%@ include file="regist_js.jsp" %>
-
-<script>
-
-function goSubmit(q){
-	if(q=='close'){
-		window.close();
-	}
-	
-	
-	var form = document.getElementById('registForm');
-	alert(form);
-	if(q=='post'){
-		form.submit();
-	}
-}
-
-
-</script>
 </body>
 
 

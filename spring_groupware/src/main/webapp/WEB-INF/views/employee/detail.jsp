@@ -274,7 +274,7 @@ textarea:read-only{
 			</div>	
 		</form>
 	</div>
-<%-- <%@ include file="detail_js.jsp" %> --%>
+<%@ include file="detail_js.jsp" %>
 </body>
 
 
