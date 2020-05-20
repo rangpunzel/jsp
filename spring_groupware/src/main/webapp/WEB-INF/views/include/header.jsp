@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
 <html>
@@ -283,13 +284,14 @@ div#logo {
 					</ul>
 				</li>
 				<li class="red">
+					<sec:authorize access="isAuthenticated()">
 					<button class="btn btn-xs btn-danger" style="margin: 5px 3px 7px 3px;" title="System Log Out"
 							onclick="self.location='<%=request.getContextPath()%>/commons/logout';">
 						<i class="ace-icon fa fa-power-off bigger-130"></i>
 						<!-- Log Out -->
 						<!-- <i class="ace-icon fa fa-arrow-right icon-on-right"></i> -->
 					</button>
-					
+					</sec:authorize>
 				</li>
 				<li class="blue" id="people-info">
 					<a data-toggle="dropdown" href="#" class="dropdown-toggle"> 

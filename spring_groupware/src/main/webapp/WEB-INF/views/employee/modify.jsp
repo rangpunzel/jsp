@@ -242,7 +242,7 @@ input:read-only,textarea:read-only{
 						<label for="regDate" class="col-xs-4 col-sm-2 control-label bolder g_label required">입사날짜</label> 
 						<div class="col-xs-8 col-sm-4 g_value">
 							<input type="text" id="regDate" name="regDate" readonly placeholder="" readonly 
-							       value="<fmt:formatDate value="${employee.regDate}" pattern="yyyy.MM.dd" />"
+							       value="<fmt:formatDate value="${employee.regDate}" pattern="yyyy-MM-dd" />"
 							       style="text-align:center;width:100%;"/>
 						</div>
 					</div>
@@ -282,11 +282,11 @@ input:read-only,textarea:read-only{
 									<div class="no-padding" name="careers[${status.index }].year" style="text-align:center;">
 										<input class="col-xs-6" type="text" data-target="year" name="careers[${status.index }].startDay" 
 											   style="text-align:center;" placeholder="입사일" readonly 
-											   value="<fmt:formatDate value="${career.startDay }" pattern="yyyy.MM.dd" /> "/>	
+											   value="<fmt:formatDate value="${career.startDay }" pattern="yyyy-MM-dd" /> "/>	
 										<span class="col-xs-1 text-center" style="margin:0;padding:0;">~</span>							
 										<input class="col-xs-5" type="text" data-target="year" name="careers[${status.index }].endDay" 
 										       style="text-align:center; padding-right:0;" placeholder="퇴사일"  readonly
-										       value="<fmt:formatDate value="${career.endDay }" pattern="yyyy.MM.dd" /> "/>
+										       value="<fmt:formatDate value="${career.endDay }" pattern="yyyy-MM-dd" /> "/>
 									</div>
 								</c:forEach>					
 							</div>	

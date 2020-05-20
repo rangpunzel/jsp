@@ -251,7 +251,7 @@ div#picturePreView{
 							<div class="col-sm-4" style="padding:2px 1px;">								
 								<label for="licenseDoc" class="label" style="width:100%;">주민등록등본</label>	
 								<div class="input-group">							
-									<input class="col-sm-12 no-padding" type="file" id="licenseDoc" name="Upload"/>
+									<input class="col-sm-12 no-padding" type="file" id="licenseDoc" name="licenseDoc"/>
 									<span class='input-group-btn'>
 										<button class="btn btn-xs btn-danger" type='button' data-role="licenseDoc"  ><b>X</b></button>
 									</span>

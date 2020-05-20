@@ -9,7 +9,7 @@
 	<http pattern="/resources/**" security="none"/>
 	
 	<authentication-manager>
-		<authentication-provider>
+<!-- 		<authentication-provider>
 			<jdbc-user-service data-source-ref="dataSource"
 				users-by-username-query="select id as username,pwd as password, enabled
 										from employee
@@ -18,7 +18,8 @@
 												from employee
 												where id=?"
 			/>
-		</authentication-provider>
+		</authentication-provider> -->
+		<authentication-provider ref="authenticator"/>
 	</authentication-manager>
 	
 	<http use-expressions="true" pattern="/**">
@@ -26,7 +27,7 @@
 		<intercept-url pattern="/commons/**" access="permitAll"/>
 		
 		<intercept-url pattern="/board/regist*" 
-		access="hasAnyRole('ROLE_USER,ROLE_ADMIN,ROLE_SUPER,ROLE_VIP,ROLE_VVIP')"/>
+		access="hasAnyRole('ROLE_USER')"/>
 		
 		<intercept-url pattern="/**/regist*" 
 		access="hasAnyRole('ROLE_ADMIN,ROLE_SUPER,ROLE_VIP,ROLE_VVIP')"/>
@@ -41,7 +42,7 @@
 			login-processing-url="/commons/loginPost"
 			username-parameter="id"
 			password-parameter="pwd"
-			default-target-url="/index.htm"
+			default-target-url="/"
 			authentication-success-handler-ref="loginSuccessHandler"
 			authentication-failure-handler-ref="loginFailureHandler"
 		/>
@@ -49,15 +50,34 @@
 			logout-url="/commons/logout"
 			invalidate-session="true"
 			delete-cookies="JSESSIONID"
+			success-handler-ref="logoutSuccessHandler"
 		/>
+		<session-management invalid-session-url="/commons/loginTimeOut">
+			<concurrency-control
+				expired-url="/commons/loginExpired"
+				max-sessions="1"
+				session-registry-ref="sessionRegistry"
+			/>
+		</session-management>
 	</http>
 	
+	<beans:bean id="sessionRegistry"
+				class="org.springframework.security.core.session.SessionRegistryImpl"
+				/>
+	<beans:bean id="authenticator"
+				class="com.groupware.security.CustomAuthentication"
+				p:employeeDAO-ref="employeeDAO"
+				/>
 	<beans:bean id="loginSuccessHandler"
 				class="com.groupware.security.LoginSuccessHandler"
-				p:defaultTargetUrl="/index.htm"/>
+				/>
 	<beans:bean id="loginFailureHandler"
 				class="com.groupware.security.LoginFailureHandler"
 				p:defaultFailureUrl="/commons/login"
 				p:useForward="true"
+				/>
+	<beans:bean id="logoutSuccessHandler"
+				class="com.groupware.security.CustomLogoutSuccessHandler"
+				p:employeeService-ref="employeeService"
 				/>
 </beans:beans>

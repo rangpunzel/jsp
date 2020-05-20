@@ -88,7 +88,7 @@
 <!-- 경력사항 추가 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.3/handlebars.min.js" ></script>
 <script id="year-template" type="text/x-handlebars-template">
-	<div class="no-padding" name="career[{{index}}].year" style="text-align:center;">
+	<div class="no-padding" name="careers[{{index}}].year" style="text-align:center;">
 		<input class="col-xs-6" type="text" readonly data-target="year" name="careers[{{index}}].startDay" style="text-align:center;" placeholder="입사일"/>	
 		<span class="col-xs-1 text-center" style="margin:0;padding:0;">~</span>							
 		<input class="col-xs-5" type="text" readonly data-target="year" name="careers[{{index}}].endDay" style="text-align:center;" placeholder="퇴사일"/>

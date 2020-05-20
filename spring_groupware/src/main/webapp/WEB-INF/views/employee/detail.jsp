@@ -4,6 +4,7 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 
 <head>
@@ -63,10 +64,11 @@ textarea:read-only{
 		<!-- 상단 우측버튼 -->
 		<div class="row">
 			<div class="wizard-actions">
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
 				<button type="button" class="btn btn-sm btn-white btn-bold"  onclick="modify_go();">
 					<i class="red ace-icon fa fa-pencil bigger-120"></i><b>수정</b>
 				</button>	
-								
+				</sec:authorize>				
 				<button type="button" class="btn btn-sm btn-white btn-bold" onclick="javascript:docPrint('document');">
 					<i class="grey ace-icon fa fa-print bigger-120"></i><b>인쇄</b>
 				</button>

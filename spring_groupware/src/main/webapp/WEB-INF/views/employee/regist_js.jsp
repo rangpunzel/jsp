@@ -247,6 +247,7 @@ function docSubmit(){
 	var form = document.getElementById("registForm");
 	// setEditorForm(); // 에디터의 데이터를 폼에 삽입
     if (!validCheck()) return false;
+	
 	//중복아이디 확인
 	if($('input[name="checkID"]').val()){
 		
@@ -256,17 +257,16 @@ function docSubmit(){
 		}else{
 			alert("중복아이디 확인은 필수입니다.");
 			return false;
-		
+		}	
 	}
-	}
-	console.log(form);
+	
 	if (!confirm("저장 하시겠습니까?")) return false;
 	
-
 	$(window).unbind("beforeunload");
 	
 	
 	waitMsg();	/* Processing message */
+	
 	controlSubmit(registForm);
 }
 

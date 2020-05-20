@@ -71,7 +71,7 @@
 		posi_no=#{posi_no},phone_p=#{phone_p},phone_c=#{phone_c},name=#{name},
 		enum=#{eno},register=#{register},postCode=#{postCode},address1=#{address1},
 		address2=#{address2},remark=#{remark},licenseDoc=#{licenseDoc},
-		graduDoc=#{graduDoc},scoreDoc=#{scoreDoc},ssn=#{ssn}
+		graduDoc=#{graduDoc},scoreDoc=#{scoreDoc},ssn=#{ssn},enabled=#{enabled}
 		
 		<if test="authority != null">
 			,authority=#{authority}
