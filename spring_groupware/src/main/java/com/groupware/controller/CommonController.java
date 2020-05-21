@@ -79,23 +79,37 @@ public class CommonController {
 	
 	@RequestMapping("commons/loginTimeOut")
 	public void loginTimeOut(HttpServletRequest request, HttpServletResponse response)throws Exception{
+		
+		//Referer : 이전 URL을 기억함
+		String retURL = request.getHeader("Referer");
+		if(retURL==null || retURL.contains("login")) {
+			retURL=request.getContextPath()+"/commons/login";
+		}
+		
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		
 		out.println("<script>");
 		out.println("alert('세션이 만료되었습니다.\\n다시 로그인 하세요!');");
-		out.println("location.href='"+request.getContextPath()+"/commons/login';");
+		out.println("location.href='"+retURL+"';");
 		out.println("</script>");
 	}
 	
 	@RequestMapping("commons/loginExpired")
 	public void loginExpired(HttpServletRequest request, HttpServletResponse response)throws Exception{
+		
+		String retURL = request.getHeader("Referer");
+		if(retURL==null || retURL.contains("login")) {
+			retURL=request.getContextPath()+"/commons/login";
+		}
+		
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		
 		out.println("<script>");
 		out.println("alert('중복 로그인이 확인되었습니다. \\n다시 로그인하면 다른 장치에서 로그인은 취소됩니다.');");
-		out.println("location.href='"+request.getContextPath()+"/commons/login';");
+		//out.println("location.href='"+request.getContextPath()+"/commons/login';");
+		out.println("location.href='"+retURL+"';");
 		out.println("</script>");
 	}
 }
