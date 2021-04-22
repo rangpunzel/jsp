@@ -24,7 +24,7 @@
 		
 		<oracle.ojdbc-version>11.2.0.3</oracle.ojdbc-version>
 		<commons.dbcp-version>2.4.0</commons.dbcp-version>
-		<mybatis-version>3.2.8</mybatis-version>
+		<mybatis-version>3.5.6</mybatis-version>
 		<mybatis.spring-version>1.2.2</mybatis.spring-version>
 		<opensymphony.sitemesh-version>2.4.2</opensymphony.sitemesh-version>
 		<jackson.databind-version>2.9.8</jackson.databind-version>
